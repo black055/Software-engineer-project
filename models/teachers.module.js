@@ -36,4 +36,9 @@ module.exports = {
         AND LOP_HOC.ID_GIAO_VIEN = '${id_gv}' 
         AND LOP_HOC.ID_LOP_HOC = '${id_lh}'`);
     },
+
+    updateScoreForStudent(id_st, id_class, gk, ck, tk) {
+        return db.query(`UPDATE BANG_DIEM SET DIEM_GK = ${gk}, DIEM_CK = ${ck}, DIEM_TK = ${tk} 
+        WHERE ID_HOC_SINH = '${id_st}' AND ID_LOP_HOC = '${id_class}'`);
+    },
 }

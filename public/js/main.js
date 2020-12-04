@@ -30,4 +30,22 @@ $(document).ready(function(){
 	$('.btnDelStudent').click(function() {
 		$('#btnCommitDelStudent').val($(this).val());
 	});
+
+
+	$('.btnEditScore').click(function() {
+		$('#edtLP').val($(this).data("lh"));
+		$('#edtID').val($(this).data("id"));
+		$('#edtHT').val($(this).data("name"));
+		$('#edtDGK').val($(this).data("gk"));
+		$('#edtDCK').val($(this).data("ck"));
+		$('#edtDTK').val($(this).data("tk"));
+	})
 });
+
+document.getElementById('select_classes').addEventListener('change', handleChange, true);
+
+function handleChange(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    window.location = `/teachers/manage_score/${e.currentTarget.value}`;
+}

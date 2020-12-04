@@ -3,11 +3,11 @@
     <select class="form-control" id="select_classes">
         <option>Chọn lớp học</option>
         {{#each mark}}
-            {{#if (eq ID_LOP_HOC ../itemSelected)}}
-                <option value={{ID_LOP_HOC}} selected>{{TEN_LOP}} - {{TEN_HP}}</option>
-            {{else}}
-                <option value={{ID_LOP_HOC}}>{{TEN_LOP}} - {{TEN_HP}}</option>
-            {{/if}}
+        {{#if (eq ID_LOP_HOC ../itemSelected)}}
+        <option value={{ID_LOP_HOC}} selected>{{TEN_LOP}} - {{TEN_HP}}</option>
+        {{else}}
+        <option value={{ID_LOP_HOC}}>{{TEN_LOP}} - {{TEN_HP}}</option>
+        {{/if}}
         {{/each}}
     </select>
 </div>
@@ -34,12 +34,59 @@
                             <td>{{DIEM_GK}}</td>
                             <td>{{DIEM_CK}}</td>
                             <td>{{DIEM_TK}}</td>
-                            <td><button type="button" class="btn btn-danger"><i class="fas fa-edit"></i></button></td>
+                            <td><button class="btn btn-danger btn-xs btnEditScore" data-title="Edit" data-toggle="modal" data-target="#editScore"
+                            data-id="{{ID_HOC_SINH}}" data-name="{{HO_TEN}}" data-gk="{{DIEM_GK}}" data-ck="{{DIEM_CK}}"
+                            data-tk="{{DIEM_TK}}" data-lh="{{../itemSelected}}">
+                                    <i class="fas fa-edit"></i>
+                                </button></td>
                         </tr>
                         {{/each}}
                     </tbody>
                 </table>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editScore" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/teachers/update_score" method="post">
+                <div class="modal-header">
+                    <h4 class="modal-title custom_align" id="Heading">Chỉnh sửa điểm số</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="edtLP">Mã lớp học:</label>
+                        <input id="edtLP" class="form-control" name="lp" type="text" placeholder="ID lớp học" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="edtID">Mã số học sinh:</label>
+                        <input id="edtID" class="form-control" name="id" type="text" placeholder="Mã số học sinh" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="edtHT">Họ và tên:</label>
+                        <input id="edtHT" class="form-control" name="ht" type="text" placeholder="Họ tên" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="edtDGK">Điểm giữa kỳ:</label>
+                        <input id="edtDGK" class="form-control" name="dgk" type="text" placeholder="Điểm giữa kỳ">
+                    </div>
+                    <div class="form-group">
+                        <label for="edtDCK">Điểm cuối kỳ:</label>
+                        <input id="edtDCK" class="form-control" name="dck" type="text" placeholder="Điểm cuối kỳ">
+                    </div>
+                    <div class="form-group">
+                        <label for="edtDTK">Điểm tổng kết:</label>
+                        <input id="edtDTK" class="form-control" name="dtk" type="text" placeholder="Điểm tổng kết">
+                    </div>
+                </div>
+
+                <div class="modal-footer ">
+                    <button type="submit" class="btn btn-success" id="btnUpdtaeScore"><i class="fa fa-upload" aria-hidden="true"></i>Cập nhật</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Hủy bỏ</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
