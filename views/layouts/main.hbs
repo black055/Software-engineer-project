@@ -3,11 +3,11 @@
 
 <head>
     {{#if session.isStudent}}
-        <title>Sinh Viên</title>
+    <title>Sinh Viên</title>
     {{else if session.isTeacher}}
-        <title>Giáo Viên</title>
+    <title>Giáo Viên</title>
     {{else}}
-        <title>Giáo Vụ</title>
+    <title>Giáo Vụ</title>
     {{/if}}
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -31,11 +31,11 @@
             </div>
             <div class="p-4 pt-5">
                 {{#if session.isStudent}}
-                    {{> studentMenu}}
+                {{> studentMenu}}
                 {{else if session.isTeacher}}
-                    {{> teacherMenu}}
+                {{> teacherMenu}}
                 {{else}}
-                    {{> adminMenu}}
+                {{> adminMenu}}
                 {{/if}}
             </div>
 
@@ -47,9 +47,19 @@
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5 pt-5">
             {{#if isSchedule}}
-                <h1>Thời khoá biểu</h1>
+            <h2>Thời khoá biểu</h2>
             {{else if isListClass}}
-                <h1>Danh sách lớp đang dạy</h1>
+            <h2>Danh sách lớp đang dạy</h2>
+            {{else if isCheckMark}}
+            <h2>Quản lý điểm số</h2>
+            <div class="col-md-3">
+                <select class="form-control" id="select_classes">
+                    <option>Chọn lớp học</option>
+                    {{#each mark}}
+                    <option value={{ID_LOP_HOC}}>{{TEN_LOP}}</option>
+                    {{/each}}
+                </select>
+            </div>
             {{/if}}
             {{{body}}}
         </div>
@@ -64,6 +74,7 @@
         crossorigin="anonymous"></script>
 
     <script src="../../../public/js/main.js"></script>
+    <script src="../../public/js/teacher_manageScore.js"></script>
 </body>
 
 </html>
