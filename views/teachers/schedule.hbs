@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table id="mytable" class="table table-bordred table-striped">
+          <thead>
+            <th>Môn học</th>
+            <th>Phòng học</th>
+            <th>Lớp</th>
+            <th>Tiết</th>
+          </thead>
+          <tbody>
+            {{#each schedule}}
+            <tr>
+              <td>{{TEN_HP}}</td>
+              <td>{{PHONG_HOC}}</td>
+              <td>{{TEN_LOP}}</td>
+              <td>{{TIET_BAT_DAU}} - {{TIET_KET_THUC}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -46,8 +46,12 @@
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5 pt-5">
+            {{#if isSchedule}}
+                <h1>Thời khoá biểu</h1>
+            {{else if isListClass}}
+                <h1>Danh sách lớp đang dạy</h1>
+            {{/if}}
             {{{body}}}
-            <p>Content</p>
         </div>
     </div>
 
