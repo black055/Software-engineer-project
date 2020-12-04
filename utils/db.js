@@ -8,6 +8,7 @@ const pool = mysql.createPool({
     password: 'root',
     database: 'cnpm',
     connectionLimit: 50,
+    dateStrings: ['DATE','DATETIME'],
 });
 
 const pool_query = util.promisify(pool.query).bind(pool);

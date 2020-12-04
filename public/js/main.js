@@ -20,4 +20,14 @@
 
 $(document).ready(function(){
 	$('#mytable').DataTable();
+	$('.btnEditStudent').click(function() {
+		$('#edtName').val($(this).data("name"));
+		$('#edtID').val($(this).data("id"));
+		$('#edtBirthday').val($(this).data("birthday"));
+		$('#rdSex').val($(this).data("sex"));
+	});
+
+	$('.btnDelStudent').click(function() {
+		$('#btnCommitDelStudent').val($(this).val());
+	});
 });

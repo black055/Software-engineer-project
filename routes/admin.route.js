@@ -8,10 +8,27 @@ router.get('/', (req, res) => {
 
 router.get('/studentsManagement', async (req, res) => {
     const data = await studentsModule.getAll();
-    console.log(data);
     res.render('admin/studentsManagement', {
         listStudents: data,
-    })
+    });
+})
+
+router.post('/studentsManagement/add', async (req, res) => {
+    result = await studentsModule.addStudent(req.body);
+    if (!result) {
+        req.session.message = "Mã số sinh viên đã tồn tại!";
+    }
+    res.redirect('/admin/studentsManagement');
+})
+
+router.post('/studentsManagement/edit', async (req, res) => {
+    result = await studentsModule.editStudent(req.body);
+    res.redirect('/admin/studentsManagement');
+})
+
+router.post('/studentsManagement/delete', async (req, res) => {
+    result = await studentsModule.delStudent(req.body);
+    res.redirect('/admin/studentsManagement');
 })
 
 module.exports = router;

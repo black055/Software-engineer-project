@@ -51,7 +51,7 @@ app.use('/logout', require('./routes/logout.route.js'));
 
 
 // Start server
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`App is running at http://localhost:${PORT}`); 
 });
