@@ -10,5 +10,6 @@ module.exports = {
 
     getAllAccounts() {
         return db.getAll(TABLE_ACCOUNT_STUDENT);
-    }
+    },
+
 }
