@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const studentsModel = require('../models/students.module');
+const db = require('../utils/db');
+const bcrypt = require('bcrypt');
 
-router.get('/',async (req, res) => {
+router.get('/', async (req, res) => {
     const data = await studentsModel.getAllAccounts();
     // data.forEach((account) => {
     //     bcrypt.hash('12345678',10, (e, hash) => {

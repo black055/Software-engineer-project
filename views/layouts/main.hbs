@@ -3,11 +3,11 @@
 
 <head>
     {{#if session.isStudent}}
-        <title>Sinh Viên</title>
+    <title>Sinh Viên</title>
     {{else if session.isTeacher}}
-        <title>Giáo Viên</title>
+    <title>Giáo Viên</title>
     {{else}}
-        <title>Giáo Vụ</title>
+    <title>Giáo Vụ</title>
     {{/if}}
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -33,11 +33,11 @@
             </div>
             <div class="p-4 pt-5">
                 {{#if session.isStudent}}
-                    {{> studentMenu}}
+                {{> studentMenu}}
                 {{else if session.isTeacher}}
-                    {{> teacherMenu}}
+                {{> teacherMenu}}
                 {{else}}
-                    {{> adminMenu}}
+                {{> adminMenu}}
                 {{/if}}
             </div>
 
@@ -60,7 +60,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 
-    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js" ></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script src="../../../public/js/main.js"></script>
+    <script src="../../public/js/teacher_manageScore.js"></script>
 </body>
+
 </html>

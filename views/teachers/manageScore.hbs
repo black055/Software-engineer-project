@@ -1,0 +1,46 @@
+<h2>Quản lý điểm số</h2>
+<div class="col-md-3" style="margin-bottom: 10px;">
+    <select class="form-control" id="select_classes">
+        <option>Chọn lớp học</option>
+        {{#each mark}}
+            {{#if (eq ID_LOP_HOC ../itemSelected)}}
+                <option value={{ID_LOP_HOC}} selected>{{TEN_LOP}} - {{TEN_HP}}</option>
+            {{else}}
+                <option value={{ID_LOP_HOC}}>{{TEN_LOP}} - {{TEN_HP}}</option>
+            {{/if}}
+        {{/each}}
+    </select>
+</div>
+
+{{#if details}}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table id="mytable" class="table table-bordred table-striped">
+                    <thead>
+                        <th>Mã học sinh</th>
+                        <th>Họ và tên</th>
+                        <th>Điểm giữa kỳ</th>
+                        <th>Điểm cuối kỳ</th>
+                        <th>Điểm tổng kết</th>
+                        <th>Chỉnh sửa</th>
+                    </thead>
+                    <tbody>
+                        {{#each details}}
+                        <tr>
+                            <td>{{ID_HOC_SINH}}</td>
+                            <td>{{HO_TEN}}</td>
+                            <td>{{DIEM_GK}}</td>
+                            <td>{{DIEM_CK}}</td>
+                            <td>{{DIEM_TK}}</td>
+                            <td><button type="button" class="btn btn-danger"><i class="fas fa-edit"></i></button></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{{/if}}

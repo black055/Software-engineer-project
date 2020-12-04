@@ -19,6 +19,9 @@ app.engine('hbs', hbs({
     defaultLayout: 'main.hbs',
 }));
 
+const handlebars = hbs.create({});
+handlebars.handlebars.registerHelper({eq: (v1, v2) => v1 == v2});
+
 // Session 
 app.use(session({
     secret: 'secret', 
