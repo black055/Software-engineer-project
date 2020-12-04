@@ -19,6 +19,10 @@ router.post('/', (req, res) => {
     if (username && password && username != 'admin' && password != 'admin') {
         database.query(`SELECT * FROM ${TABLE_ACCOUNT_TEACHER} WHERE ID_GIAO_VIEN = ?`
         , [username], (error, results, fields) => {
+            if (error){
+                console.log(error);
+            }
+            
             if (results.length > 0) {
                 bcrypt.compare(password, results[0]['MAT_KHAU'], (e, r) => {
                     if (r == true) {

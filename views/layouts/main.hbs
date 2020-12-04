@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
         crossorigin="anonymous">
 
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+
     <script src="https://kit.fontawesome.com/91d242f952.js" crossorigin="anonymous"></script>
 </head>
 
@@ -46,21 +48,6 @@
 
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5 pt-5">
-            {{#if isSchedule}}
-            <h2>Thời khoá biểu</h2>
-            {{else if isListClass}}
-            <h2>Danh sách lớp đang dạy</h2>
-            {{else if isCheckMark}}
-            <h2>Quản lý điểm số</h2>
-            <div class="col-md-3">
-                <select class="form-control" id="select_classes">
-                    <option>Chọn lớp học</option>
-                    {{#each mark}}
-                    <option value={{ID_LOP_HOC}}>{{TEN_LOP}}</option>
-                    {{/each}}
-                </select>
-            </div>
-            {{/if}}
             {{{body}}}
         </div>
     </div>
@@ -73,6 +60,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
     <script src="../../../public/js/main.js"></script>
     <script src="../../public/js/teacher_manageScore.js"></script>
 </body>

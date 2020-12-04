@@ -40,12 +40,15 @@ router.get('/manage_score', async (req, res) => {
 });
 
 router.get('/manage_score/:id', async (req, res) => {
+    console.log(req.params.id);
     const data = await teachersModel.getAllClasses(req.session.username);
     const details = await teachersModel.getMarkByClass(req.session.username, req.params.id);
+    const id = req.params.id;
     res.render('teachers/manageScore', {
         isCheckMark: true,
         mark: data,
         details: details,
+        itemSelected: id,
     })
 });
 

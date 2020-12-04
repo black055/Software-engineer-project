@@ -1,3 +1,5 @@
+const options = document.getElementById('select_classes');
+
 document.getElementById('select_classes').addEventListener('change', handleChange, true);
 
 function handleChange(e) {
