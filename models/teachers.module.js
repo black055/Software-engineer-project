@@ -41,4 +41,13 @@ module.exports = {
         return db.query(`UPDATE BANG_DIEM SET DIEM_GK = ${gk}, DIEM_CK = ${ck}, DIEM_TK = ${tk} 
         WHERE ID_HOC_SINH = '${id_st}' AND ID_LOP_HOC = '${id_class}'`);
     },
+
+    getStudentsByClass(id_class, id_gv) {
+        return db.query(`SELECT HOC_SINH.ID_HOC_SINH, HO_TEN, GIOI_TINH, NGAY_SINH
+        FROM HOC_SINH, BANG_DIEM, LOP_HOC 
+        WHERE HOC_SINH.ID_HOC_SINH = BANG_DIEM.ID_HOC_SINH
+        AND BANG_DIEM.ID_LOP_HOC = LOP_HOC.ID_LOP_HOC
+        AND LOP_HOC.ID_GIAO_VIEN = '${id_gv}'
+        AND LOP_HOC.ID_LOP_HOC = '${id_class}'`)
+    }
 }

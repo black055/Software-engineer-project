@@ -42,10 +42,17 @@ $(document).ready(function(){
 	})
 });
 
-document.getElementById('select_classes').addEventListener('change', handleChange, true);
+//document.getElementById('select_classes').addEventListener('change', handleChangeManageScore, true);
+//document.getElementById('select_classes_students').addEventListener('change', handleChangeListStudent);
 
-function handleChange(e) {
-    e.preventDefault();
-    e.stopPropagation();
+$('#select_classes').on('change', function(e) {
+	e.preventDefault();
+	e.stopPropagation();
     window.location = `/teachers/manage_score/${e.currentTarget.value}`;
-}
+})
+
+$('#select_classes_students').on('change', function (e) {
+	e.preventDefault();
+	e.stopPropagation();
+	window.location = `/teachers/list_students/${e.currentTarget.value}`;
+})
