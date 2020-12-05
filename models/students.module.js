@@ -69,10 +69,12 @@ module.exports = {
                 
                 if (results.length > 0) {
                     // Có tồn tại học sinh có ID tương ứng
-                    db.query(`DELETE FROM ${TABLE_ACCOUNT_STUDENT} WHERE ID_HOC_SINH = ${student.id}`).then(() => {
-                        db.query(`DELETE FROM ${TABLE_STUDENT} WHERE ID_HOC_SINH = ${student.id}`).then(() => {
-                            resolve(true);
-                        });
+                    db.query(`DELETE FROM ${TABLE_ACCOUNT_STUDENT} WHERE ID_HOC_SINH = '${student.id}'`).then(() => {
+                        db.query(`DELETE FROM BANG_DIEM WHERE ID_HOC_SINH = ${student.id}`).then(() => {
+                            db.query(`DELETE FROM ${TABLE_STUDENT} WHERE ID_HOC_SINH = '${student.id}'`).then(() => {
+                                resolve(true);
+                            });
+                        })
                     });
                 }  else {
                     // Không tồn tại học sinh có ID tương ứng

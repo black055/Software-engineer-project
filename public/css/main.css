@@ -935,3 +935,9 @@ a[data-toggle=collapse] {
 .footer p {
 	color: rgba(255, 255, 255, .5)
 }
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}

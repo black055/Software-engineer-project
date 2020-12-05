@@ -1,0 +1,157 @@
+<h1>Quản lý giáo viên</h1>
+<div class="container">
+  <div class="row justify-content-end">
+      <p data-placement="top" data-toggle="tooltip" title="Thêm sinh viên">
+        <button type="button" class="btn btn-success btn-s btnAddTeacher" data-title="Add" data-toggle="modal">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          Thêm giáo viên
+        </button>
+      </p>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table id="mytable" class="table table-bordred table-striped">
+          <thead>
+              <tr>
+            <th>Mã giáo viên</th>
+            <th>Họ tên</th>
+            <th>Ngày sinh</th>
+            <th>Giới tính</th>
+            <th>Điện thoại</th>
+            <th>Chỉnh sửa</th>
+            <th>Xóa</th></tr>
+          </thead>
+
+          <tbody>
+            {{#each listTeachers}}
+            <tr>
+              <td>{{ID_GIAO_VIEN}}</td>
+              <td>{{HO_TEN}}</td>
+              <td>{{NGAY_SINH}}</td>
+              <td>{{GIOI_TINH}}</td>
+              <td>{{SDT}}</td>
+              <td><p data-placement="top" data-toggle="tooltip" title="Chỉnh sửa">
+                  <button class="btn btn-primary btn-xs btnEditTeacher" data-title="Edit" data-toggle="modal" data-target="#edit" data-name="{{HO_TEN}}" data-id="{{ID_GIAO_VIEN}}" data-sex="{{GIOI_TINH}}" data-birthday="{{NGAY_SINH}}" data-phone="{{SDT}}"">
+                      <i class="fa fa-pencil" aria-hidden="true"></i>
+                  </button></p>
+              </td>
+              <td><p data-placement="top" data-toggle="tooltip" title="Xóa">
+                  <button class="btn btn-danger btn-xs btnDelTeacher" data-title="Delete" data-toggle="modal" data-target="#delete" value="{{ID_GIAO_VIEN}}">
+                      <i class="fa fa-trash" aria-hidden="true"></i>
+                  </button></p>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+                
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add teacher modal -->
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/admin/teachersManage/add" method="post" onsubmit="return validateAddForm();">
+                <div class="modal-header">
+                    <h4 class="modal-title custom_align" id="Heading"> Thêm giáo viên</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input id="edtAddName" class="form-control" name="name" type="text" placeholder="Họ tên" required>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <input id="edtAddID" class="form-control" name="id" type="text" placeholder="Mã giáo viên" value="GV">
+                        </div>
+                        <div class="col">
+                            <input id="edtAddBirthday" class="form-control" name="birthday" type="date" placeholder="Ngày sinh" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <select id="rdAddSex" name="sex" class="form-control">
+                              <option selected value='Nam'>Nam</option>
+                              <option value='Nữ'>Nữ</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <input id="edtAddPhone" class="form-control" name="phone" type="number" placeholder="Số điện thoại" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer ">
+                    <button type="submit" class="btn btn-success" id="btnCommitAddTeacher" ><i class="fa fa-plus" aria-hidden="true"></i> Xác nhận</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Hủy bỏ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete teacher modal -->
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title custom_align" id="Heading"> Xóa giáo viên</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger"><i class="fas fa-exclamation-triangle"></i> Chắn chắc muốn xóa giáo viên này?</div>
+            </div>
+
+            <div class="modal-footer ">
+                <form action="/admin/teachersManage/delete" method="post">
+                    <button type="submit" class="btn btn-success" id="btnCommitDelTeacher" name="id"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Xác nhận</button>
+                </form>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Hủy bỏ</button>
+            </div>
+        </div>
+  </div>
+</div>
+
+<!-- Edit teacher modal -->
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/admin/teachersManage/edit" method="post" onsubmit="return validateEditForm();">
+                <div class="modal-header">
+                    <h4 class="modal-title custom_align" id="Heading"> Chỉnh sửa thông tin giáo viên</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group">
+                        <input id="edtName" class="form-control" name="name" type="text" placeholder="Họ tên" required>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <input id="edtID" class="form-control" name="id" type="text" placeholder="Mã giáo viên" readonly>
+                        </div>
+                        <div class="col">
+                            <input id="edtBirthday" class="form-control" name="birthday" type="date" placeholder="Ngày sinh" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <select id="rdSex" name="sex" class="form-control">
+                              <option value='Nam'>Nam</option>
+                              <option value='Nữ'>Nữ</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <input id="edtPhone" class="form-control" name="phone" type="number" placeholder="Số điện thoại" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer ">
+                    <button type="submit" class="btn btn-success" id="btnCommitEditTeacher" ><i class="fa fa-upload" aria-hidden="true"></i> Cập nhật</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Hủy bỏ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

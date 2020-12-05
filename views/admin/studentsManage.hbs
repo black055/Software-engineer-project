@@ -2,7 +2,7 @@
 <div class="container">
   <div class="row justify-content-end">
       <p data-placement="top" data-toggle="tooltip" title="Thêm sinh viên">
-        <button type="button" class="btn btn-success btn-s btnAddStudent" data-title="Add" data-toggle="modal" data-target="#add">
+        <button type="button" class="btn btn-success btn-s btnAddStudent" data-title="Add" data-toggle="modal">
           <i class="fa fa-plus" aria-hidden="true"></i>
           Thêm sinh viên
         </button>
@@ -49,23 +49,24 @@
   </div>
 </div>
 
+<!-- Edit student modal -->
 <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="studentsManagement/edit" method="post">
+            <form action="/admin/studentsManage/edit" method="post" onsubmit="return validateEditForm();">
                 <div class="modal-header">
                     <h4 class="modal-title custom_align" id="Heading"> Chỉnh sửa thông tin học sinh</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <input id="edtName" class="form-control" name="name" type="text" placeholder="Họ tên">
+                        <input id="edtName" class="form-control" name="name" type="text" placeholder="Họ tên" required>
                     </div>
                     <div class="form-group row">
                         <div class="col">
                             <input id="edtID" class="form-control" name="id" type="text" placeholder="Mã số sinh viên" readonly>
                         </div>
                         <div class="col">
-                            <input id="edtBirthday" class="form-control" name="birthday" type="date" placeholder="Ngày sinh">
+                            <input id="edtBirthday" class="form-control" name="birthday" type="date" placeholder="Ngày sinh" required>
                         </div>
                     </div>
                     <select id="rdSex" name="sex" class="form-control col-3">
@@ -83,26 +84,27 @@
     </div>
 </div>
 
+<!-- Add student modal -->
 <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="studentsManagement/add" method="post" id="addStudentForm">
+            <form action="/admin/studentsManage/add" method="post" onsubmit="return validateAddForm();">
                 <div class="modal-header">
                     <h4 class="modal-title custom_align" id="Heading"> Thêm học sinh</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <input class="form-control" name="name" type="text" placeholder="Họ tên">
+                        <input id="edtAddName" class="form-control" name="name" type="text" placeholder="Họ tên" required>
                     </div>
                     <div class="form-group row">
                         <div class="col">
-                            <input class="form-control" name="id" type="text" placeholder="Mã số sinh viên">
+                            <input id="edtAddID" class="form-control" name="id" maxlength="8" type="text" onkeypress="return onlyNumber(event)" placeholder="Mã số sinh viên">
                         </div>
                         <div class="col">
-                            <input class="form-control" name="birthday" type="date" placeholder="Ngày sinh">
+                            <input id="edtAddBirthday" class="form-control" name="birthday" type="date" placeholder="Ngày sinh" required>
                         </div>
                     </div>
-                    <select id="sex" name="sex" class="form-control col-3">
+                    <select id="rdAddSex" name="sex" class="form-control col-3">
                         <option selected value='Nam'>Nam</option>
                         <option value='Nữ'>Nữ</option>
                     </select>
@@ -117,6 +119,7 @@
     </div>
 </div>
 
+<!-- Delete student modal -->
 <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -128,13 +131,11 @@
             </div>
 
             <div class="modal-footer ">
-                <form action="studentsManagement/delete" method="post">
+                <form action="/admin/studentsManage/delete" method="post">
                     <button type="submit" class="btn btn-success" id="btnCommitDelStudent" name="id"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Xác nhận</button>
                 </form>
                 <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Hủy bỏ</button>
             </div>
         </div>
-
-  </div>
-
+    </div>
 </div>

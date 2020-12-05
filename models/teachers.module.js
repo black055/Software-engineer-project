@@ -1,4 +1,5 @@
 const db = require('../utils/db');
+const bcrypt = require('bcrypt');
 
 const TABLE_ACCOUNT_TEACHER = 'ACCOUNT_GIAO_VIEN';
 const TABLE_TEACHER = 'GIAO_VIEN';
@@ -36,4 +37,77 @@ module.exports = {
         AND LOP_HOC.ID_GIAO_VIEN = '${id_gv}' 
         AND LOP_HOC.ID_LOP_HOC = '${id_lh}'`);
     },
+
+    addTeacher(teacher) {
+        // techer(id, name, birthday, sex, phone)
+
+        return new Promise(function(resolve, reject) {
+            db.query(`SELECT * FROM ${TABLE_ACCOUNT_TEACHER} WHERE ID_GIAO_VIEN = ?`
+            , [teacher.id], (error, results, fields) => {
+                if (error){
+                    console.log(error);
+                }
+                
+                if (results.length > 0) {
+                    // Đã tồn tại giáo viên có ID tương ứng
+                    resolve(false);
+                } else {
+                    // Chưa tồn tại giáo viên có ID tương ứng
+                    db.query(`INSERT INTO ${TABLE_TEACHER}(ID_GIAO_VIEN,HO_TEN,NGAY_SINH,GIOI_TINH,SDT)
+                                VALUES ('${teacher.id}','${teacher.name}','${teacher.birthday}','${teacher.sex}','${teacher.phone}')`).then(() => {
+                        bcrypt.hash('12345678', 10, (e, hash) => {
+                            db.query(`INSERT INTO ${TABLE_ACCOUNT_TEACHER}(ID_GIAO_VIEN,MAT_KHAU) VALUES ('${teacher.id}','${hash}')`).then(() => resolve(true));
+                        });
+                    });
+                };
+            });
+        });
+    },
+
+    editTeacher(teacher) {
+        // techer(id, name, birthday, sex, phone)
+
+        return new Promise((resolve, reject) => {
+            db.query(`SELECT * FROM ${TABLE_ACCOUNT_TEACHER} WHERE ID_GIAO_VIEN = ?`
+            , [teacher.id], (error, results, fields) => {
+                if (error){
+                    console.log(error);
+                }
+                
+                if (results.length > 0) {
+                    // Đã tồn tại giáo viên có ID tương ứng
+                    db.query(`UPDATE ${TABLE_TEACHER} SET HO_TEN ='${teacher.name}',NGAY_SINH ='${teacher.birthday}',
+                    GIOI_TINH ='${teacher.sex}',SDT='${teacher.phone}' WHERE ID_GIAO_VIEN = '${teacher.id}';`).then(() => resolve(true));
+                } else {
+                    // Không tồn tại giáo viên có ID tương ứng
+                    resolve(false);
+                };
+            });
+        });
+    },
+
+    delTeacher(teacher) {
+        return new Promise(function(resolve, reject) {
+            db.query(`SELECT * FROM ${TABLE_ACCOUNT_TEACHER} WHERE ID_GIAO_VIEN = ?`
+            , [teacher.id], (error, results, fields) => {
+                if (error){
+                    console.log(error);
+                }
+                
+                if (results.length > 0) {
+                    // Có tồn tại giáo viên có ID tương ứng
+                    db.query(`DELETE FROM ${TABLE_ACCOUNT_TEACHER} WHERE ID_GIAO_VIEN = '${teacher.id}'`).then(() => {
+                        db.query(`UPDATE LOP_HOC SET ID_GIAO_VIEN = null WHERE ID_GIAO_VIEN = '${teacher.id}'`).then(() => {
+                            db.query(`DELETE FROM ${TABLE_TEACHER} WHERE ID_GIAO_VIEN = '${teacher.id}'`).then(() => {
+                                resolve(true);
+                            });
+                        })
+                    });
+                }  else {
+                    // Không tồn tại giáo viên có ID tương ứng
+                    resolve(false);
+                };
+            });
+        });
+    }
 }
