@@ -1,0 +1,42 @@
+<h2>Thống kê</h2>
+<div class="col-md-3" style="margin-bottom: 10px;">
+    <select class="form-control" id="statistic">
+        <option>Chọn tiêu chí thống kê</option>
+        {{#each title}}
+        {{#if (eq id ../itemSelected)}}
+        <option value={{id}} selected>{{content}}</option>
+        {{else}}
+        <option value={{id}}>{{content}}</option>
+        {{/if}}
+        {{/each}}
+    </select>
+</div>
+
+{{#if data}}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table id="mytable" class="table table-bordred table-striped">
+                    <thead>
+                        <th>Mã học sinh</th>
+                        <th>Họ và tên</th>
+                        <th>Điểm tổng kết</th>
+                        <th>Môn học</th>
+                    </thead>
+                    <tbody>
+                        {{#each data}}
+                        <tr>
+                            <td>{{ID_HOC_SINH}}</td>
+                            <td>{{HO_TEN}}</td>
+                            <td>{{DIEM_TK}}</td>
+                            <td>{{TEN_HP}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{{/if}}
