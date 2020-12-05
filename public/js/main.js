@@ -42,6 +42,18 @@ $(document).ready(function(){
 	})
 });
 
+$('#form_edit_score').submit(function() {
+	if ($('#edtDGK').val() < 0 || $('#edtDCK').val() < 0 || $('#edtDTK').val() < 0) {
+		if ($('#edtDGK').prev().attr('id') != 'alert') {
+			$('#edtDGK').before(`<div class="alert alert-danger alert-dismissible fade show" id="alert">
+		 Điểm không hợp lệ, điểm số phải là số nguyên dương !
+		<button type="button" class="close" data-dismiss="alert">&times;</button></div>`)
+		}
+		return false;
+	};
+	
+});
+
 //document.getElementById('select_classes').addEventListener('change', handleChangeManageScore, true);
 //document.getElementById('select_classes_students').addEventListener('change', handleChangeListStudent);
 
@@ -49,10 +61,16 @@ $('#select_classes').on('change', function(e) {
 	e.preventDefault();
 	e.stopPropagation();
     window.location = `/teachers/manage_score/${e.currentTarget.value}`;
-})
+});
 
 $('#select_classes_students').on('change', function (e) {
 	e.preventDefault();
 	e.stopPropagation();
 	window.location = `/teachers/list_students/${e.currentTarget.value}`;
+});
+
+$('#statistic').on('change', function (e) {
+	e.preventDefault();
+	e.stopPropagation();
+	window.location = `/teachers/statistic/${e.currentTarget.value}`;
 })
