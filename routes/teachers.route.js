@@ -57,4 +57,22 @@ router.post('/update_score', async (req, res) => {
     res.redirect(`/teachers/manage_score/${lp}`);
 })
 
+router.get('/list_students', async (req, res) => {
+    const data = await teachersModel.getAllClasses(req.session.username);
+    res.render('teachers/listStudent', {
+        classes: data,
+    })
+});
+
+router.get('/list_students/:id', async (req, res) => {
+    const data = await teachersModel.getAllClasses(req.session.username);
+    const list = await teachersModel.getStudentsByClass(req.params.id, req.session.username);
+    const id = req.params.id;
+    res.render('teachers/listStudent', {
+        classes: data,
+        list: list,
+        itemSelected: id,
+    })
+})
+
 module.exports = router;

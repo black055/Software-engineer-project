@@ -1,0 +1,42 @@
+<h2>Xem danh sách lớp</h2>
+<div class="col-md-3" style="margin-bottom: 10px;">
+    <select class="form-control" id="select_classes_students">
+        <option>Chọn lớp học</option>
+        {{#each classes}}
+        {{#if (eq ID_LOP_HOC ../itemSelected)}}
+        <option value={{ID_LOP_HOC}} selected>{{TEN_LOP}} - {{TEN_HP}}</option>
+        {{else}}
+        <option value={{ID_LOP_HOC}}>{{TEN_LOP}} - {{TEN_HP}}</option>
+        {{/if}}
+        {{/each}}
+    </select>
+</div>
+
+{{#if list}}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table id="mytable" class="table table-bordred table-striped">
+                    <thead>
+                        <th>Mã học sinh</th>
+                        <th>Họ và tên</th>
+                        <th>Ngày sinh</th>
+                        <th>Giới tính</th>
+                    </thead>
+                    <tbody>
+                        {{#each list}}
+                        <tr>
+                            <td>{{ID_HOC_SINH}}</td>
+                            <td>{{HO_TEN}}</td>
+                            <td>{{NGAY_SINH}}</td>
+                            <td>{{GIOI_TINH}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{{/if}}
