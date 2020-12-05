@@ -1,6 +1,8 @@
 const express = require('express');
 const studentsModule = require('../models/students.module');
 const teachersModule = require('../models/teachers.module');
+const classesModule = require('../models/classes.module');
+const coursesModule = require('../models/courses.module');
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -16,9 +18,6 @@ router.get('/studentsManage', async (req, res) => {
 
 router.post('/studentsManage/add', async (req, res) => {
     result = await studentsModule.addStudent(req.body);
-    if (!result) {
-        req.session.message = "Mã số sinh viên đã tồn tại!";
-    }
     res.redirect('/admin/studentsManage');
 })
 
@@ -41,9 +40,6 @@ router.get('/teachersManage', async (req, res) => {
 
 router.post('/teachersManage/add', async (req, res) => {
     result = await teachersModule.addTeacher(req.body);
-    if (!result) {
-        req.session.message = "Mã giáo viên đã tồn tại!";
-    }
     res.redirect('/admin/teachersManage');
 })
 
@@ -55,6 +51,32 @@ router.post('/teachersManage/edit', async (req, res) => {
 router.post('/teachersManage/delete', async (req, res) => {
     result = await teachersModule.delTeacher(req.body);
     res.redirect('/admin/teachersManage');
+})
+
+router.get('/classesManage', async (req, res) => {
+    const data = await classesModule.getAll();
+    const courses = await coursesModule.getAll();
+    const teachers = await teachersModule.getAll();
+    res.render('admin/classesManage', {
+        listClasses: data,
+        listCourses: courses,
+        listTeachers: teachers,
+    });
+})
+
+router.post('/classesManage/add', async (req, res) => {
+    result = await classesModule.addClass(req.body);
+    res.redirect('/admin/classesManage');
+})
+
+router.post('/classesManage/edit', async (req, res) => {
+    result = await classesModule.editClass(req.body);
+    res.redirect('/admin/classesManage');
+})
+
+router.post('/classesManage/delete', async (req, res) => {
+    result = await classesModule.deleteClass(req.body);
+    res.redirect('/admin/classesManage');
 })
 
 module.exports = router;

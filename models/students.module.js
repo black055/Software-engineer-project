@@ -82,7 +82,5 @@ module.exports = {
                 };
             });
         });
-        
     }
-
 }
