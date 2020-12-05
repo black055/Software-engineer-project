@@ -40,7 +40,6 @@ router.get('/manage_score', async (req, res) => {
 });
 
 router.get('/manage_score/:id', async (req, res) => {
-    console.log(req.params.id);
     const data = await teachersModel.getAllClasses(req.session.username);
     const details = await teachersModel.getMarkByClass(req.session.username, req.params.id);
     const id = req.params.id;
@@ -49,7 +48,13 @@ router.get('/manage_score/:id', async (req, res) => {
         mark: data,
         details: details,
         itemSelected: id,
-    })
+    });
 });
+
+router.post('/update_score', async (req, res) => {
+    const {lp, id, ht, dgk, dck, dtk} = req.body;
+    await teachersModel.updateScoreForStudent(id, lp, dgk, dck, dtk);
+    res.redirect(`/teachers/manage_score/${lp}`);
+})
 
 module.exports = router;

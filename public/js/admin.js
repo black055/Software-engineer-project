@@ -22,6 +22,17 @@ $(document).ready(function(){
 	$('.btnDelTeacher').click(function() {
 		$('#btnCommitDelTeacher').val($(this).val());
 	});
+
+	$('.edtTeacherID').keyup(function() {
+		if ($('.edtTeacherID').val().length < 2) {
+			$('.edtTeacherID').val('GV');
+		} else if ($('.edtTeacherID').val().length > 2) {
+			teacherID = $('.edtTeacherID').val();
+			teacherID = teacherID.substring(2);
+			teacherID = teacherID.replace(/\D/g,'');
+			$('.edtTeacherID').val('GV' + teacherID);
+		}
+	});
 });
 
 function onlyNumber(evt) {

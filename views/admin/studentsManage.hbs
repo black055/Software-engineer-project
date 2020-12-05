@@ -1,52 +1,56 @@
 <h1>Quản lý sinh viên</h1>
 <div class="container">
-  <div class="row justify-content-end">
-      <p data-placement="top" data-toggle="tooltip" title="Thêm sinh viên">
-        <button type="button" class="btn btn-success btn-s btnAddStudent" data-title="Add" data-toggle="modal">
-          <i class="fa fa-plus" aria-hidden="true"></i>
-          Thêm sinh viên
-        </button>
-      </p>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <div class="table-responsive">
-        <table id="mytable" class="table table-bordred table-striped">
-          <thead>
-              <tr>
-            <th>Mã số sinh viên</th>
-            <th>Họ tên</th>
-            <th>Ngày sinh</th>
-            <th>Giới tính</th>
-            <th>Chỉnh sửa</th>
-            <th>Xóa</th></tr>
-          </thead>
-
-          <tbody>
-            {{#each listStudents}}
-            <tr>
-              <td>{{ID_HOC_SINH}}</td>
-              <td>{{HO_TEN}}</td>
-              <td>{{NGAY_SINH}}</td>
-              <td>{{GIOI_TINH}}</td>
-              <td><p data-placement="top" data-toggle="tooltip" title="Chỉnh sửa">
-                  <button class="btn btn-primary btn-xs btnEditStudent" data-title="Edit" data-toggle="modal" data-target="#edit" data-name="{{HO_TEN}}" data-id="{{ID_HOC_SINH}}" data-sex="{{GIOI_TINH}}" data-birthday="{{NGAY_SINH}}"">
-                      <i class="fa fa-pencil" aria-hidden="true"></i>
-                  </button></p>
-              </td>
-              <td><p data-placement="top" data-toggle="tooltip" title="Xóa">
-                  <button class="btn btn-danger btn-xs btnDelStudent" data-title="Delete" data-toggle="modal" data-target="#delete" value="{{ID_HOC_SINH}}">
-                      <i class="fa fa-trash" aria-hidden="true"></i>
-                  </button></p>
-              </td>
-            </tr>
-            {{/each}}
-          </tbody>
-        </table>
-                
-      </div>
+    <div class="row justify-content-end">
+        <p data-placement="top" data-toggle="tooltip" title="Thêm sinh viên">
+            <button type="button" class="btn btn-success btn-s btnAddStudent" data-title="Add" data-toggle="modal" data-target="#add">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Thêm sinh viên
+            </button>
+        </p>
     </div>
-  </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table id="mytable" class="table table-bordred table-striped">
+                    <thead>
+                        <tr>
+                            <th>Mã số sinh viên</th>
+                            <th>Họ tên</th>
+                            <th>Ngày sinh</th>
+                            <th>Giới tính</th>
+                            <th>Chỉnh sửa</th>
+                            <th>Xóa</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {{#each listStudents}}
+                        <tr>
+                            <td>{{ID_HOC_SINH}}</td>
+                            <td>{{HO_TEN}}</td>
+                            <td>{{NGAY_SINH}}</td>
+                            <td>{{GIOI_TINH}}</td>
+                            <td>
+                                <p data-placement="top" data-toggle="tooltip" title="Chỉnh sửa">
+                                    <button class="btn btn-primary btn-xs btnEditStudent" data-title="Edit" data-toggle="modal" data-target="#edit" data-name="{{HO_TEN}}" data-id="{{ID_HOC_SINH}}"
+                                        data-sex="{{GIOI_TINH}}" data-birthday="{{NGAY_SINH}}">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </button></p>
+                            </td>
+                            <td>
+                                <p data-placement="top" data-toggle="tooltip" title="Xóa">
+                                    <button class="btn btn-danger btn-xs btnDelStudent" data-title="Delete" data-toggle="modal" data-target="#delete" value="{{ID_HOC_SINH}}">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button></p>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Edit student modal -->
@@ -76,7 +80,7 @@
                 </div>
 
                 <div class="modal-footer ">
-                    <button type="submit" class="btn btn-success" id="btnCommitEditStudent" ><i class="fa fa-upload" aria-hidden="true"></i> Cập nhật</button>
+                    <button type="submit" class="btn btn-success" id="btnCommitEditStudent"><i class="fa fa-upload" aria-hidden="true"></i> Cập nhật</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Hủy bỏ</button>
                 </div>
             </form>
@@ -111,7 +115,7 @@
                 </div>
 
                 <div class="modal-footer ">
-                    <button type="submit" class="btn btn-success" id="btnCommitAddStudent" ><i class="fa fa-plus" aria-hidden="true"></i> Xác nhận</button>
+                    <button type="submit" class="btn btn-success" id="btnCommitAddStudent"><i class="fa fa-plus" aria-hidden="true"></i> Xác nhận</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Hủy bỏ</button>
                 </div>
             </form>
