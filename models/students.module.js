@@ -162,6 +162,30 @@ module.exports = {
                 };
             });
         });
+    },
+    
+    getPassword(idStudent) {
+        return db.query(`SELECT * FROM ${TABLE_ACCOUNT_STUDENT} WHERE ID_HOC_SINH='${idStudent}'`)
+    },
 
+    changePass(idStudent, pass) {
+        return new Promise(function(resolve, reject) {
+            db.query(`SELECT * FROM ${TABLE_ACCOUNT_STUDENT} WHERE ID_HOC_SINH = ?`
+            , [idStudent], (error, results, fields) => {
+                if (error){
+                    console.log(error);
+                }
+                
+                if (results.length > 0) {
+                    bcrypt.hash(pass, 10, (e, hash) => {
+                        db.query(`UPDATE ${TABLE_ACCOUNT_STUDENT} SET MAT_KHAU = '${hash}' WHERE ID_HOC_SINH = '${idStudent}'`).then(() => resolve(true));
+                    });
+                }  else {
+                    // Không tồn tại học sinh có ID tương ứng
+                    resolve(false);
+                };
+            });
+        });
     }
+
 }

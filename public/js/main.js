@@ -36,16 +36,16 @@ $('.btnEditScore').click(function() {
 	$('#edtDTK').val($(this).data("tk"));
 });
 
-$('#form_edit_score').submit(function() {
-	if ($('#edtDGK').val() < 0 || $('#edtDCK').val() < 0 || $('#edtDTK').val() < 0) {
-		if ($('#edtDGK').prev().attr('id') != 'alert') {
-			$('#edtDGK').before(`<div class="alert alert-danger alert-dismissible fade show" id="alert">
+$('#form_edit_score').submit(function () {
+  if ($('#edtDGK').val() < 0 || $('#edtDCK').val() < 0 || $('#edtDTK').val() < 0) {
+    if ($('#edtDGK').prev().attr('id') != 'alert') {
+      $('#edtDGK').before(`<div class="alert alert-danger alert-dismissible fade show" id="alert">
 		 Điểm không hợp lệ, điểm số phải là số nguyên dương !
 		<button type="button" class="close" data-dismiss="alert">&times;</button></div>`)
-		}
-		return false;
-	};
-	
+    }
+    return false;
+  };
+
 });
 
 $('#select_classes').on('change', function(e) {
@@ -55,15 +55,15 @@ $('#select_classes').on('change', function(e) {
 });
 
 $('#select_classes_students').on('change', function (e) {
-	e.preventDefault();
-	e.stopPropagation();
-	window.location = `/teachers/list_students/${e.currentTarget.value}`;
+  e.preventDefault();
+  e.stopPropagation();
+  window.location = `/teachers/list_students/${e.currentTarget.value}`;
 });
 
 $('#statistic').on('change', function (e) {
-	e.preventDefault();
-	e.stopPropagation();
-	window.location = `/teachers/statistic/${e.currentTarget.value}`;
+  e.preventDefault();
+  e.stopPropagation();
+  window.location = `/teachers/statistic/${e.currentTarget.value}`;
 })
 
 $(".enroll-cb").click(function () {
@@ -83,9 +83,9 @@ $(".enroll-cb").click(function () {
 });
 
 $("#btn-enroll").click(async function () {
-	await $(".enroll-cb:checked", $("#mytable").dataTable().fnGetNodes()).each(function() {
-		$("#enroll-form").append(`<input type="hidden" name="classes" value="${$(this).data('idclass')}" />`);
-	})
+  await $(".enroll-cb:checked", $("#mytable").dataTable().fnGetNodes()).each(function () {
+    $("#enroll-form").append(`<input type="hidden" name="classes" value="${$(this).data('idclass')}" />`);
+  })
   $("#enroll-form").submit();
 });
 
@@ -197,3 +197,16 @@ $('#form_update_pass').submit(function() {
     return false;
   }
 });
+$('#changePass').click(function () {
+  const curPass = $('#currentPass').val();
+  const newPass = $('#newPass').val();
+  const confirmPass = $('#confirmPass').val();
+  if (newPass == confirmPass && curPass != newPass
+  && curPass.length < 100 && newPass.length < 100 && confirmPass.length < 100
+  && /^[A-Za-z\d]{8,}$/.test(curPass)
+  && /^[A-Za-z\d]{8,}$/.test(newPass)
+  && /^[A-Za-z\d]{8,}$/.test(confirmPass)) {
+    $('#changePass-form').submit();
+  }
+  else alert('Nhập mật khẩu mới giống nhau');
+})

@@ -151,6 +151,7 @@ module.exports = {
         AND BANG_DIEM.DIEM_TK >= 8`);
     },
 
+<<<<<<< HEAD
     getInfoTeacher (id_gv) {
         return db.query(`SELECT GIAO_VIEN.ID_GIAO_VIEN, HO_TEN, NGAY_SINH, GIOI_TINH, SDT FROM GIAO_VIEN WHERE ID_GIAO_VIEN = '${id_gv}'`)
     },
@@ -167,4 +168,6 @@ module.exports = {
     updateTeacherPassword (id, password) {
         return db.query(`UPDATE ACCOUNT_GIAO_VIEN SET MAT_KHAU = '${password}' WHERE ID_GIAO_VIEN = '${id}'`);
     }
+=======
+>>>>>>> 1b2c273900380ffd93d682c56c597c52d91e19e6
 }
