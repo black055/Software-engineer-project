@@ -1,0 +1,30 @@
+<h2>Hủy đăng ký học phần</h2>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <form action="/students/unenroll_class" method="post" id="unenroll-form"></form>
+        <table id="mytable" class="table table-bordred table-striped">
+          <thead>
+            <th>Mã học phần</th>
+            <th>Tên học phần</th>
+            <th>Phòng học</th>
+            <th>Lịch học</th>
+            <th>Chỉnh sửa</th>
+          </thead>
+          <tbody>
+            {{#each subjects}}
+            <tr>
+              <td>{{MA_HP}}</td>
+              <td>{{TEN_HP}}</td>
+              <td>{{PHONG_HOC}}</td>
+              <td>Thứ {{LICH_HOC}}: ({{TIET_BAT_DAU}} - {{TIET_KET_THUC}})</td>
+              <td><button class="btn btn-danger btn-unenroll" data-idclass="{{ID_LOP_HOC}}"><i class="fa fa-trash" aria-hidden="true"></i></button></i></td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

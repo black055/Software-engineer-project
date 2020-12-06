@@ -15,4 +15,46 @@ router.get('/', async (req, res) => {
     res.render('students/students');
 });
 
+router.get('/timetable', async (req, res) => {
+    const data = await studentsModel.getTimetable(req.session.username);
+    res.render('students/timetable', {
+        isTimetable: true,
+        timetable: data
+    });
+});
+
+router.get('/scoreTable', async (req, res) => {
+    const data = await studentsModel.getScoreTable(req.session.username);
+    res.render('students/scoreTable', {
+        isScoreTable: true,
+        scoreTable: data
+    });
+});
+
+router.get('/enroll', async (req, res) => {
+    const data = await studentsModel.getEnrollableSubject(req.session.username);
+    res.render('students/enroll', {
+        isEnrolling: true,
+        subjectEnroll: data
+    });
+});
+
+router.post('/enroll_classes', async (req, res) => {
+    await studentsModel.enrollSubject(req.session.username, req.body.classes);
+    res.redirect(`/students`);
+})
+
+router.get('/unenroll', async (req, res) => {
+    const data = await studentsModel.getSubjectEnrolled(req.session.username);
+    res.render('students/unenroll', {
+        isDeletingSubject: true,
+        subjects: data
+    });
+});
+
+router.post('/unenroll_class', async (req, res) => {
+    await studentsModel.unenrollSubject(req.session.username, req.body.classEnrolled);
+    res.redirect(`/students`);
+})
+
 module.exports = router;
