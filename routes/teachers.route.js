@@ -104,35 +104,4 @@ router.get('/statistic/:id', async (req, res) => {
     })
 })
 
-router.get('/changePassword', async (req, res) => {
-    res.render('teachers/changePassword', {
-        isChangingPass: true,
-    });
-});
-
-router.post('/newPass', async (req, res) => {
-    db.query(`SELECT * FROM ACCOUNT_GIAO_VIEN WHERE ID_GIAO_VIEN = ?`
-        , [req.session.username], (error, results, fields) => {
-            if (error) {
-                console.log(error);
-            }
-
-            if (results.length) {
-                //So sánh mk hiện tại với mk hash trong database
-                bcrypt.compare(req.body.currentPass, results[0]['MAT_KHAU'], async (e, r) => {
-                    if (r == true) {
-                        await teachersModel.changePass(req.session.username, req.body.newPass);
-                        res.redirect('/');
-                    } else {
-                        req.session.message = "Mật khẩu hiện tại không chính xác!";
-                        res.redirect('/teachers/changePassword');
-                    }
-                });
-            }
-            else {
-                res.redirect(`/teachers`);
-            }
-        })
-});
-
 module.exports = router;
