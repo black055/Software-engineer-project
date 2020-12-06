@@ -15,17 +15,45 @@
 })(jQuery);
 
 $(document).ready(function () {
-  $("#mytable").DataTable();
-  $(".btnEditStudent").click(function () {
-    $("#edtName").val($(this).data("name"));
-    $("#edtID").val($(this).data("id"));
-    $("#edtBirthday").val($(this).data("birthday"));
-    $("#rdSex").val($(this).data("sex"));
+  $("#mytable").DataTable({
+    "language": {
+      "decimal":        "",
+      "emptyTable":     "Không có dữ liệu",
+      "info":           "Đang hiển thị _START_ đến _END_ của _TOTAL_ dòng",
+      "infoEmpty":      "Đang hiển thị 0 đến 0 của 0 dòng",
+      "infoFiltered":   "(đã lọc từ _MAX_ dòng dữ liệu)",
+      "infoPostFix":    "",
+      "thousands":      ",",
+      "lengthMenu":     "Hiện _MENU_ dòng",
+      "loadingRecords": "Loading...",
+      "processing":     "Processing...",
+      "search":         "Tìm kiếm:",
+      "zeroRecords":    "Không tìm thấy kết quả trùng khớp",
+      "paginate": {
+          "first":      "Đầu",
+          "last":       "Cuối",
+          "next":       "Sau",
+          "previous":   "Trước"
+      },
+      "aria": {
+          "sortAscending":  ": activate to sort column ascending",
+          "sortDescending": ": activate to sort column descending"
+      }
+  },
   });
+});
 
-  $(".btnDelStudent").click(function () {
-    $("#btnCommitDelStudent").val($(this).val());
-  });
+// Edit Student score
+$(".btnEditStudent").click(function () {
+  $("#edtName").val($(this).data("name"));
+  $("#edtID").val($(this).data("id"));
+  $("#edtBirthday").val($(this).data("birthday"));
+  $("#rdSex").val($(this).data("sex"));
+});
+
+$(".btnDelStudent").click(function () {
+  $("#btnCommitDelStudent").val($(this).val());
+});
 
 $('.btnEditScore').click(function() {
 	$('#edtLP').val($(this).data("lh"));
@@ -56,18 +84,29 @@ $('#select_classes').on('change', function(e) {
     window.location = `/teachers/manage_score/${e.currentTarget.value}`;
 });
 
+// List students
 $('#select_classes_students').on('change', function (e) {
   e.preventDefault();
   e.stopPropagation();
   window.location = `/teachers/list_students/${e.currentTarget.value}`;
 });
 
+
+// Statistics
 $('#statistic').on('change', function (e) {
   e.preventDefault();
   e.stopPropagation();
   window.location = `/teachers/statistic/${e.currentTarget.value}`;
+});
+
+$('#admin_statistic').on('change', function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+  window.location = `/admin/statistic/${e.currentTarget.value}`;
 })
 
+
+// Student enroll and unenroll
 $(".enroll-cb").click(function () {
   let $box = $(this);
   let myTable = $("#mytable").dataTable();
@@ -94,7 +133,7 @@ $("#btn-enroll").click(async function () {
 $('.btn-unenroll').click(async function () {
   await $("#unenroll-form").append(`<input type="hidden" name="classEnrolled" value="${$(this).data('idclass')}" />`);
   $("#unenroll-form").submit();
-})});
+});
 
 
 // Edit information teachers

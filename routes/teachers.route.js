@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
     //         console.log(`insert into ACCOUNT_GIAO_VIEN (ID_GIAO_VIEN,MAT_KHAU) values ('${account['ID_GIAO_VIEN']}','${hash}');`);
     //     })
     // })
-    res.render('teachers/teachers');
+    res.redirect('/teachers/information');
 });
 
 router.get('/information', async (req, res) => {

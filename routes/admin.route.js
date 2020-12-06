@@ -101,4 +101,32 @@ router.post('/coursesManage/edit', async (req, res) => {
     res.redirect('/admin/coursesManage');
 })
 
+router.get('/statistic', async (req, res) => {
+    const title = [
+        {content: 'Học sinh trượt', id: 'failed'},
+        {content: 'Học sinh qua môn', id: 'success'},
+        {content: 'Học sinh TB > 8', id: 'pro'},
+    ];
+    res.render('admin/statisticStudent', {title: title,});
+})
+
+router.get('/statistic/:id', async (req, res) => {
+    const title = [
+        {content: 'Học sinh trượt', id: 'failed'},
+        {content: 'Học sinh qua môn', id: 'success'},
+        {content: 'Học sinh TB > 8', id: 'pro'},
+    ];
+    const itemSelected = req.params.id;
+    let data;
+    if (itemSelected == 'failed') {
+        data = await studentsModule.getStudentsFailed();
+    } else if (itemSelected == 'success') {
+        data = await studentsModule.getStudentsSuccess();
+    } else data = await studentsModule.getStudentsPro();
+    res.render('admin/statisticStudent', {
+        title: title,
+        data: data,
+    })
+})
+
 module.exports = router;
