@@ -241,17 +241,3 @@ $('#form_update_pass').submit(function() {
     return false;
   }
 });
-
-$('#changePass').click(function () {
-  const curPass = $('#currentPass').val();
-  const newPass = $('#newPass').val();
-  const confirmPass = $('#confirmPass').val();
-  if (newPass == confirmPass && curPass != newPass
-  && curPass.length < 100 && newPass.length < 100 && confirmPass.length < 100
-  && /^[A-Za-z\d]{8,}$/.test(curPass)
-  && /^[A-Za-z\d]{8,}$/.test(newPass)
-  && /^[A-Za-z\d]{8,}$/.test(confirmPass)) {
-    $('#changePass-form').submit();
-  }
-  else alert('Nhập mật khẩu mới giống nhau');
-})

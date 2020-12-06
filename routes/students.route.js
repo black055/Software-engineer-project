@@ -57,35 +57,23 @@ router.post('/unenroll_class', async (req, res) => {
     res.redirect(`/students`);
 })
 
-router.get('/changePassword', async (req, res) => {
-    res.render('students/changePassword', {
-        isChangingPass: true,
-    });
+router.get('/password', async (req, res) => {
+    res.render('students/changePassword');
 });
 
 router.post('/newPass', async (req, res) => {
-    db.query(`SELECT * FROM ACCOUNT_HOC_SINH WHERE ID_HOC_SINH = ?`
-        , [req.session.username], (error, results, fields) => {
-            if (error) {
-                console.log(error);
-            }
-
-            if (results.length) {
-                //So sánh mk hiện tại với mk hash trong database
-                bcrypt.compare(req.body.currentPass, results[0]['MAT_KHAU'], async (e, r) => {
-                    if (r == true) {
-                        await studentsModel.changePass(req.session.username, req.body.newPass);
-                        res.redirect('/');
-                    } else {
-                        req.session.message = "Mật khẩu hiện tại không chính xác!";
-                        res.redirect('/students/changePassword');
-                    }
-                });
-            }
-            else {
-                res.redirect(`/students`);
-            }
-        })
+    const passwords = await studentsModel.getPassword(req.session.username);
+    const password = passwords[0];
+    bcrypt.compare(req.body.oldPass, password['MAT_KHAU'], function (err, result) {
+        if (result == true) {
+            bcrypt.hash(req.body.newPass, 10, async function (e, hash) {
+                await studentsModel.changePass(req.session.username, hash);
+            })
+            res.redirect('/students');
+        } else {
+            res.render('students/changePassword', {message: "Mật khẩu cũ không đúng."});
+        }
+    })
 });
 
 module.exports = router;

@@ -6,7 +6,7 @@ const TABLE_STUDENT = 'HOC_SINH';
 
 module.exports = {
     getAll() {
-        return  db.getAll(TABLE_STUDENT);
+        return db.getAll(TABLE_STUDENT);
     },
 
     getAllAccounts() {
@@ -16,25 +16,25 @@ module.exports = {
     addStudent(student) {
         // student(id, name, birthday, sex)
 
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             db.query(`SELECT * FROM ${TABLE_ACCOUNT_STUDENT} WHERE ID_HOC_SINH = ?`
-            , [student.id], (error, results, fields) => {
-                if (error){
-                    console.log(error);
-                }
-                
-                if (results.length > 0) {
-                    // Đã tồn tại học sinh có ID tương ứng
-                    resolve(false);
-                } else {
-                    // Chưa tồn tại học sinh có ID tương ứng
-                    db.query(`INSERT INTO ${TABLE_STUDENT}(ID_HOC_SINH,HO_TEN,NGAY_SINH,GIOI_TINH) VALUES ('${student.id}','${student.name}','${student.birthday}','${student.sex}')`).then(() => {
-                        bcrypt.hash('12345678', 10, (e, hash) => {
-                            db.query(`INSERT INTO ${TABLE_ACCOUNT_STUDENT}(ID_HOC_SINH,MAT_KHAU) VALUES ('${student.id}','${hash}')`).then(() => resolve(true));
+                , [student.id], (error, results, fields) => {
+                    if (error) {
+                        console.log(error);
+                    }
+
+                    if (results.length > 0) {
+                        // Đã tồn tại học sinh có ID tương ứng
+                        resolve(false);
+                    } else {
+                        // Chưa tồn tại học sinh có ID tương ứng
+                        db.query(`INSERT INTO ${TABLE_STUDENT}(ID_HOC_SINH,HO_TEN,NGAY_SINH,GIOI_TINH) VALUES ('${student.id}','${student.name}','${student.birthday}','${student.sex}')`).then(() => {
+                            bcrypt.hash('12345678', 10, (e, hash) => {
+                                db.query(`INSERT INTO ${TABLE_ACCOUNT_STUDENT}(ID_HOC_SINH,MAT_KHAU) VALUES ('${student.id}','${hash}')`).then(() => resolve(true));
+                            });
                         });
-                    });
-                };
-            });
+                    };
+                });
         });
     },
 
@@ -42,46 +42,46 @@ module.exports = {
         // student(id, name, birthday, sex)
         return new Promise((resolve, reject) => {
             db.query(`SELECT * FROM ${TABLE_ACCOUNT_STUDENT} WHERE ID_HOC_SINH = ?`
-            , [student.id], (error, results, fields) => {
-                if (error){
-                    console.log(error);
-                }
-                
-                if (results.length > 0) {
-                    // Đã tồn tại học sinh có ID tương ứng
-                    db.query(`UPDATE ${TABLE_STUDENT} SET HO_TEN ='${student.name}',NGAY_SINH ='${student.birthday}',GIOI_TINH ='${student.sex}' WHERE ID_HOC_SINH = '${student.id}';`).then(() => resolve(true));
-                } else {
-                    // Không tồn tại học sinh có ID tương ứng
-                    resolve(false);
-                };
-            });
+                , [student.id], (error, results, fields) => {
+                    if (error) {
+                        console.log(error);
+                    }
+
+                    if (results.length > 0) {
+                        // Đã tồn tại học sinh có ID tương ứng
+                        db.query(`UPDATE ${TABLE_STUDENT} SET HO_TEN ='${student.name}',NGAY_SINH ='${student.birthday}',GIOI_TINH ='${student.sex}' WHERE ID_HOC_SINH = '${student.id}';`).then(() => resolve(true));
+                    } else {
+                        // Không tồn tại học sinh có ID tương ứng
+                        resolve(false);
+                    };
+                });
         });
     },
 
     delStudent(student) {
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             db.query(`SELECT * FROM ${TABLE_ACCOUNT_STUDENT} WHERE ID_HOC_SINH = ?`
-            , [student.id], (error, results, fields) => {
-                if (error){
-                    console.log(error);
-                }
-                
-                if (results.length > 0) {
-                    // Có tồn tại học sinh có ID tương ứng
-                    db.query(`DELETE FROM ${TABLE_ACCOUNT_STUDENT} WHERE ID_HOC_SINH = '${student.id}'`).then(() => {
-                        db.query(`DELETE FROM BANG_DIEM WHERE ID_HOC_SINH = ${student.id}`).then(() => {
-                            db.query(`DELETE FROM ${TABLE_STUDENT} WHERE ID_HOC_SINH = '${student.id}'`).then(() => {
-                                resolve(true);
-                            });
-                        })
-                    });
-                }  else {
-                    // Không tồn tại học sinh có ID tương ứng
-                    resolve(false);
-                };
-            });
+                , [student.id], (error, results, fields) => {
+                    if (error) {
+                        console.log(error);
+                    }
+
+                    if (results.length > 0) {
+                        // Có tồn tại học sinh có ID tương ứng
+                        db.query(`DELETE FROM ${TABLE_ACCOUNT_STUDENT} WHERE ID_HOC_SINH = '${student.id}'`).then(() => {
+                            db.query(`DELETE FROM BANG_DIEM WHERE ID_HOC_SINH = ${student.id}`).then(() => {
+                                db.query(`DELETE FROM ${TABLE_STUDENT} WHERE ID_HOC_SINH = '${student.id}'`).then(() => {
+                                    resolve(true);
+                                });
+                            })
+                        });
+                    } else {
+                        // Không tồn tại học sinh có ID tương ứng
+                        resolve(false);
+                    };
+                });
         });
-        
+
     },
 
     getTimetable(idStudent) {
@@ -91,7 +91,7 @@ module.exports = {
         AND BANG_DIEM.ID_LOP_HOC = LOP_HOC.ID_LOP_HOC
         AND HOC_PHAN.MA_HP = LOP_HOC.MA_HP
         AND HOC_SINH.ID_HOC_SINH = '${idStudent}'`);
-       
+
     },
 
     getScoreTable(idStudent) {
@@ -114,26 +114,26 @@ module.exports = {
     },
 
     enrollSubject(idStudent, classes) {
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             db.query(`SELECT * FROM ${TABLE_ACCOUNT_STUDENT} WHERE ID_HOC_SINH = ?`
-            , [idStudent], (error, results, fields) => {
-                if (error){
-                    console.log(error);
-                }
-                
-                if (results.length) {
-                    if (typeof classes == 'string') classes = [classes];
-                    classes.forEach(function(e) {
-                        db.query(`INSERT INTO BANG_DIEM (ID_HOC_SINH,ID_LOP_HOC,DIEM_GK,DIEM_CK,DIEM_TK) VALUES ('${idStudent}','${e}',0,0,0)`)
-                        resolve(true);
-                    })
-                }  else {
-                    resolve(false);
-                };
-            });
+                , [idStudent], (error, results, fields) => {
+                    if (error) {
+                        console.log(error);
+                    }
+
+                    if (results.length) {
+                        if (typeof classes == 'string') classes = [classes];
+                        classes.forEach(function (e) {
+                            db.query(`INSERT INTO BANG_DIEM (ID_HOC_SINH,ID_LOP_HOC,DIEM_GK,DIEM_CK,DIEM_TK) VALUES ('${idStudent}','${e}',0,0,0)`)
+                            resolve(true);
+                        })
+                    } else {
+                        resolve(false);
+                    };
+                });
         });
     },
-    
+
     getSubjectEnrolled(idStudent) {
         return db.query(`SELECT LOP_HOC.*, HOC_PHAN.TEN_HP
         FROM BANG_DIEM, HOC_SINH, LOP_HOC, HOC_PHAN
@@ -144,48 +144,32 @@ module.exports = {
     },
 
     unenrollSubject(idStudent, idclass) {
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             db.query(`SELECT * FROM ${TABLE_ACCOUNT_STUDENT} WHERE ID_HOC_SINH = ?`
-            , [idStudent], (error, results, fields) => {
-                if (error){
-                    console.log(error);
-                }
-                
-                if (results.length) {
-                    if (typeof idclass == 'string') {
-                        db.query(`DELETE FROM BANG_DIEM 
-                            WHERE ID_HOC_SINH = '${idStudent}' AND ID_LOP_HOC = '${idclass}'`)
-                        resolve(true);
+                , [idStudent], (error, results, fields) => {
+                    if (error) {
+                        console.log(error);
                     }
-                }  else {
-                    resolve(false);
-                };
-            });
+
+                    if (results.length) {
+                        if (typeof idclass == 'string') {
+                            db.query(`DELETE FROM BANG_DIEM 
+                            WHERE ID_HOC_SINH = '${idStudent}' AND ID_LOP_HOC = '${idclass}'`)
+                            resolve(true);
+                        }
+                    } else {
+                        resolve(false);
+                    };
+                });
         });
     },
-    
+
     getPassword(idStudent) {
         return db.query(`SELECT * FROM ${TABLE_ACCOUNT_STUDENT} WHERE ID_HOC_SINH='${idStudent}'`)
     },
 
-    changePass(idStudent, pass) {
-        return new Promise(function(resolve, reject) {
-            db.query(`SELECT * FROM ${TABLE_ACCOUNT_STUDENT} WHERE ID_HOC_SINH = ?`
-            , [idStudent], (error, results, fields) => {
-                if (error){
-                    console.log(error);
-                }
-                
-                if (results.length > 0) {
-                    bcrypt.hash(pass, 10, (e, hash) => {
-                        db.query(`UPDATE ${TABLE_ACCOUNT_STUDENT} SET MAT_KHAU = '${hash}' WHERE ID_HOC_SINH = '${idStudent}'`).then(() => resolve(true));
-                    });
-                }  else {
-                    // Không tồn tại học sinh có ID tương ứng
-                    resolve(false);
-                };
-            });
-        });
+    changePass(idStudent, passHashed) {
+        return db.query(`UPDATE ${TABLE_ACCOUNT_STUDENT} SET MAT_KHAU = '${passHashed}' WHERE ID_HOC_SINH = '${idStudent}'`);
     }
 
 }
