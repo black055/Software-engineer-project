@@ -35,7 +35,7 @@ router.post('/', (req, res) => {
                         res.cookie('isStudent', false);
                         res.redirect(`/teachers`);
                     } else {
-                        req.session.message = "Mật khẩu không chính xác !";
+                        req.session.message = "Mật khẩu hoặc tên đăng nhập không chính xác!";
                         res.redirect('/login');
                     }
                 });
@@ -54,10 +54,25 @@ router.post('/', (req, res) => {
                                 res.cookie('isStudent', true);
                                 res.redirect(`/students`);
                             } else {
-                                req.session.message = "Mật khẩu không chính xác !";
+                                req.session.username = null;
+                                req.session.isStudent = false;
+                                req.session.isTeacher = false;
+                                res.cookie('isTeacher', false);
+                                res.cookie('isStudent', false);
+                                req.session.message = "Mật khẩu hoặc tên đăng nhập không chính xác!";
                                 res.redirect('/login');
+                                res.end();
                             }
                         })
+                    } else {
+                        req.session.username = null;
+                        req.session.isStudent = false;
+                        req.session.isTeacher = false;
+                        res.cookie('isTeacher', false);
+                        res.cookie('isStudent', false);
+                        req.session.message = "Mật khẩu hoặc tên đăng nhập không chính xác!";
+                        res.redirect('/login');
+                        res.end();
                     }
                 });
             };
@@ -79,7 +94,7 @@ router.post('/', (req, res) => {
             req.session.isTeacher = false;
             res.cookie('isTeacher', false);
             res.cookie('isStudent', false);
-            req.session.message = "Mật khẩu không chính xác !";
+            req.session.message = "Mật khẩu hoặc tên đăng nhập không chính xác!";
             res.redirect('/login');
             res.end();
         }
