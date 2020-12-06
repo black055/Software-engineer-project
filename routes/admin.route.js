@@ -79,4 +79,26 @@ router.post('/classesManage/delete', async (req, res) => {
     res.redirect('/admin/classesManage');
 })
 
+router.get('/coursesManage', async (req, res) => {
+    const courses = await coursesModule.getAll();
+    res.render('admin/coursesManage', {
+        listCourses: courses,
+    });
+})
+
+router.post('/coursesManage/add', async (req, res) => {
+    result = await coursesModule.addCourse(req.body);
+    res.redirect('/admin/coursesManage');
+})
+
+router.post('/coursesManage/delete', async (req, res) => {
+    result = await coursesModule.deleteCourse(req.body);
+    res.redirect('/admin/coursesManage');
+})
+
+router.post('/coursesManage/edit', async (req, res) => {
+    result = await coursesModule.editCourse(req.body);
+    res.redirect('/admin/coursesManage');
+})
+
 module.exports = router;
