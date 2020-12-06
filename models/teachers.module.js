@@ -154,4 +154,29 @@ module.exports = {
         AND LOP_HOC.ID_GIAO_VIEN = '${id_gv}'
         AND BANG_DIEM.DIEM_TK >= 8`);
     },
+
+    getPassword(idGiaoVien) {
+        return db.query(`SELECT * FROM ${TABLE_ACCOUNT_TEACHER} WHERE ID_GIAO_VIEN='${idGiaoVien}'`)
+    },
+
+    changePass(idGiaoVien, pass) {
+        return new Promise(function(resolve, reject) {
+            db.query(`SELECT * FROM ${TABLE_ACCOUNT_TEACHER} WHERE ID_GIAO_VIEN = ?`
+            , [idGiaoVien], (error, results, fields) => {
+                if (error){
+                    console.log(error);
+                }
+                
+                if (results.length > 0) {
+                    bcrypt.hash(pass, 10, (e, hash) => {
+                        db.query(`UPDATE ${TABLE_ACCOUNT_TEACHER} SET MAT_KHAU = '${hash}' WHERE ID_GIAO_VIEN = '${idGiaoVien}'`).then(() => resolve(true));
+                    });
+                }  else {
+                    // Không tồn tại giáo viên có ID tương ứng
+                    resolve(false);
+                };
+            });
+        });
+    }
+
 }

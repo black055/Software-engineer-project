@@ -21,7 +21,7 @@ app.engine('hbs', hbs({
         // Tính toán cơ bản
         inc: function(number) {
             return number + 1;
-        }
+        },
     }
 }));
 
