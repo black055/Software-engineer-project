@@ -150,4 +150,21 @@ module.exports = {
         AND LOP_HOC.ID_GIAO_VIEN = '${id_gv}'
         AND BANG_DIEM.DIEM_TK >= 8`);
     },
+
+    getInfoTeacher (id_gv) {
+        return db.query(`SELECT GIAO_VIEN.ID_GIAO_VIEN, HO_TEN, NGAY_SINH, GIOI_TINH, SDT FROM GIAO_VIEN WHERE ID_GIAO_VIEN = '${id_gv}'`)
+    },
+
+    updateInfoTeacher (id, name, gender, bthday, sdt) {
+        return db.query(`UPDATE GIAO_VIEN SET HO_TEN = '${name}', GIOI_TINH = '${gender}', NGAY_SINH = '${bthday}', SDT = '${sdt}' 
+        WHERE ID_GIAO_VIEN = '${id}'`);
+    },
+
+    getTeacherAccount (id) {
+        return db.query(`SELECT MAT_KHAU FROM ACCOUNT_GIAO_VIEN WHERE ID_GIAO_VIEN = '${id}'`);
+    },
+
+    updateTeacherPassword (id, password) {
+        return db.query(`UPDATE ACCOUNT_GIAO_VIEN SET MAT_KHAU = '${password}' WHERE ID_GIAO_VIEN = '${id}'`);
+    }
 }

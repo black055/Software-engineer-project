@@ -15,6 +15,39 @@ router.get('/', async (req, res) => {
     res.render('teachers/teachers');
 });
 
+router.get('/information', async (req, res) => {
+    const data = await teachersModel.getInfoTeacher(req.session.username);
+    res.render('teachers/info', {data: data[0]});
+});
+
+router.post('/updateInformation', async (req, res) => {
+    const {idGV, name, sex, bthday, sdt} = req.body;
+    await teachersModel.updateInfoTeacher(idGV, name, sex, bthday, sdt);
+    res.redirect('/teachers/information');
+});
+
+router.get('/updatePassword', async (req, res) => {
+    res.render('teachers/password');
+});
+
+router.post('/changePassword', async (req, res) => {
+    const passwords = await teachersModel.getTeacherAccount(req.session.username);
+    const password = passwords[0];
+    console.log(req.body.oldPass, password);
+    bcrypt.compare(req.body.oldPass, password['MAT_KHAU'], function (err, result) {
+        if (result == true) {
+            console.log("Mat khau dung");
+            bcrypt.hash(req.body.newPass, 10, async function (e, hash) {
+                await teachersModel.updateTeacherPassword(req.session.username, hash);
+            })
+            res.redirect('/teachers/information');
+        } else {
+            console.log("Mat khau sai");
+            res.render('teachers/password', {message: "Mật khẩu cũ không đúng."});
+        }
+    })
+})
+
 router.get('/schedule', async (req, res) => {
     const data = await teachersModel.getSchedule(req.session.username);
     res.render('teachers/schedule', {

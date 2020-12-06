@@ -1,0 +1,32 @@
+<h2>Đăng ký học phần</h2>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <form action="/students/enroll_classes" method="POST" id="enroll-form">
+          <table id="mytable" class="table table-bordred table-striped">
+            <thead>
+              <th>STT</th>
+              <th>Mã học phần</th>
+              <th>Tên học phần</th>
+              <th>Lịch học</th>
+              <th></th>
+            </thead>
+            <tbody>
+              {{#each subjectEnroll}}
+              <tr>
+                <td>{{inc @index}}</td>
+                <td>{{MA_HP}}</td>
+                <td>{{TEN_HP}}</td>
+                <td>Thứ {{LICH_HOC}}: ({{TIET_BAT_DAU}} - {{TIET_KET_THUC}})</td>
+                <td><input type="checkbox" class="form-check-input enroll-cb" name="{{MA_HP}}" data-idclass="{{ID_LOP_HOC}}"></td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </form>
+        <div class="d-flex justify-content-end mt-4"><button class="btn btn-success" id="btn-enroll">Submit</button></div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -17,10 +17,19 @@ app.engine('hbs', hbs({
     partialsDir: path.join(__dirname, 'views/partials'),
     layoutsDir: path.join(__dirname, 'views/layouts'),
     defaultLayout: 'main.hbs',
+    helpers: {
+        // Tính toán cơ bản
+        inc: function(number) {
+            return number + 1;
+        }
+    }
 }));
 
 const handlebars = hbs.create({});
-handlebars.handlebars.registerHelper({eq: (v1, v2) => v1 == v2});
+handlebars.handlebars.registerHelper({
+    eq: (v1, v2) => v1 == v2,
+    male: (v1) => v1 == "Nam",
+});
 
 // Session 
 app.use(session({

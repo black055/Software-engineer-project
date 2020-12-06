@@ -1,0 +1,25 @@
+<h2>Bảng điểm</h2>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table id="mytable" class="table table-bordred table-striped">
+          <thead>
+            <th>STT</th>
+            <th>Tên học phần</th>
+            <th>Điểm tổng kết</th>
+          </thead>
+          <tbody>
+            {{#each scoreTable}}
+            <tr>
+              <td>{{inc @index}}</td>
+              <td>{{TEN_HP}}</td>
+              <td>{{DIEM_TK}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

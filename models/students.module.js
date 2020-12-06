@@ -81,5 +81,87 @@ module.exports = {
                 };
             });
         });
+        
+    },
+
+    getTimetable(idStudent) {
+        return db.query(`SELECT LOP_HOC.*, HOC_PHAN.TEN_HP
+        FROM BANG_DIEM, HOC_SINH, LOP_HOC, HOC_PHAN
+        WHERE BANG_DIEM.ID_HOC_SINH = HOC_SINH.ID_HOC_SINH
+        AND BANG_DIEM.ID_LOP_HOC = LOP_HOC.ID_LOP_HOC
+        AND HOC_PHAN.MA_HP = LOP_HOC.MA_HP
+        AND HOC_SINH.ID_HOC_SINH = '${idStudent}'`);
+       
+    },
+
+    getScoreTable(idStudent) {
+        return db.query(`SELECT BANG_DIEM.DIEM_TK, HOC_PHAN.TEN_HP
+        FROM BANG_DIEM, HOC_PHAN, LOP_HOC
+        WHERE LOP_HOC.ID_LOP_HOC = BANG_DIEM.ID_LOP_HOC
+        AND HOC_PHAN.MA_HP = LOP_HOC.MA_HP
+        AND BANG_DIEM.ID_HOC_SINH = '${idStudent}'`);
+    },
+
+    getEnrollableSubject(idStudent) {
+        return db.query(`SELECT DISTINCT LOP_HOC.*, HOC_PHAN.TEN_HP
+            FROM LOP_HOC, HOC_PHAN
+            WHERE LOP_HOC.MA_HP = HOC_PHAN.MA_HP
+            AND LOP_HOC.MA_HP NOT IN (
+                SELECT LOP_HOC.MA_HP
+                FROM LOP_HOC, BANG_DIEM
+                WHERE LOP_HOC.ID_LOP_HOC = BANG_DIEM.ID_LOP_HOC
+                AND BANG_DIEM.ID_HOC_SINH = '${idStudent}')`);
+    },
+
+    enrollSubject(idStudent, classes) {
+        return new Promise(function(resolve, reject) {
+            db.query(`SELECT * FROM ${TABLE_ACCOUNT_STUDENT} WHERE ID_HOC_SINH = ?`
+            , [idStudent], (error, results, fields) => {
+                if (error){
+                    console.log(error);
+                }
+                
+                if (results.length) {
+                    if (typeof classes == 'string') classes = [classes];
+                    classes.forEach(function(e) {
+                        db.query(`INSERT INTO BANG_DIEM (ID_HOC_SINH,ID_LOP_HOC,DIEM_GK,DIEM_CK,DIEM_TK) VALUES ('${idStudent}','${e}',0,0,0)`)
+                        resolve(true);
+                    })
+                }  else {
+                    resolve(false);
+                };
+            });
+        });
+    },
+    
+    getSubjectEnrolled(idStudent) {
+        return db.query(`SELECT LOP_HOC.*, HOC_PHAN.TEN_HP
+        FROM BANG_DIEM, HOC_SINH, LOP_HOC, HOC_PHAN
+        WHERE BANG_DIEM.ID_HOC_SINH = HOC_SINH.ID_HOC_SINH
+        AND BANG_DIEM.ID_LOP_HOC = LOP_HOC.ID_LOP_HOC
+        AND HOC_PHAN.MA_HP = LOP_HOC.MA_HP
+        AND HOC_SINH.ID_HOC_SINH = '${idStudent}'`);
+    },
+
+    unenrollSubject(idStudent, idclass) {
+        return new Promise(function(resolve, reject) {
+            db.query(`SELECT * FROM ${TABLE_ACCOUNT_STUDENT} WHERE ID_HOC_SINH = ?`
+            , [idStudent], (error, results, fields) => {
+                if (error){
+                    console.log(error);
+                }
+                
+                if (results.length) {
+                    if (typeof idclass == 'string') {
+                        db.query(`DELETE FROM BANG_DIEM 
+                            WHERE ID_HOC_SINH = '${idStudent}' AND ID_LOP_HOC = '${idclass}'`)
+                        resolve(true);
+                    }
+                }  else {
+                    resolve(false);
+                };
+            });
+        });
+
     }
 }

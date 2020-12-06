@@ -1,0 +1,39 @@
+<form action="/teachers/updateInformation" method="post">
+    <div class="form-group col-md-3">
+        <label for="idGV">Mã giáo viên</label>
+        <input type="text" class="form-control" id="idGV" name="idGV" value={{data.ID_GIAO_VIEN}} readonly>
+    </div>
+
+    <div class="form-group col-md-3" id="divName">
+        <label for="name">Họ và tên</label>
+        <input type="text" class="form-control" id="name" name="name" value="{{data.HO_TEN}}" readonly>
+    </div>
+
+    <div class="form-group col-md-3">
+        <label for="gender">Giới tính</label>
+        <select id="gender" name="sex" class="form-control" disabled>
+            {{#if (male data.GIOI_TINH)}}
+            <option value='Nam' selected>Nam</option>
+            <option value='Nữ'>Nữ</option>
+            {{else}}
+            <option value='Nam'>Nam</option>
+            <option value='Nữ' selected>Nữ</option>
+            {{/if}}
+        </select>
+    </div>
+
+    <div class="form-group col-md-3">
+        <label for="bthday">Ngày sinh</label>
+        <input type="date" class="form-control" id="bthday" name="bthday" value={{data.NGAY_SINH}} readonly>
+    </div>
+
+    <div class="form-group col-md-3" id="divSDT">
+        <label for="sdt">Số điện thoại</label>
+        <input type="text" class="form-control" id="sdt" name="sdt" value={{data.SDT}} readonly>
+    </div>
+    <div class="col-md-3">
+        <button type="button" class="btn btn-primary" id="editInfo">Sửa đổi</button>
+        <button type="submit" class="btn btn-success" id="updateInfo">Cập nhật</button>
+        <button type="button" class="btn btn-danger" id="canleEdit">Hủy</button>
+    </div>
+</form>
