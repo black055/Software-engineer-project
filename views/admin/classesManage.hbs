@@ -1,0 +1,216 @@
+<h1>Quản lý lớp học</h1>
+<div class="container">
+    <div class="row justify-content-end">
+        <p data-placement="top" data-toggle="tooltip" title="Thêm lớp học">
+            <button type="button" class="btn btn-success btn-s btnAddClass" data-title="Add" data-toggle="modal" data-target="#add">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Thêm lớp học
+            </button>
+        </p>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table id="mytable" class="table table-bordred table-striped">
+                    <thead>
+                        <tr>
+                            <th>Mã môn học</th>
+                            <th>Tên môn học</th>
+                            <th>Lớp</th>
+                            <th>Phòng</th>
+                            <th>Lịch học</th>
+                            <th>Giáo viên</th>
+                            <th>Ngày bắt đầu</th>
+                            <th>Chỉnh sửa</th>
+                            <th>Xóa</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {{#each listClasses}}
+                        <tr>
+                            <td>{{ID_LOP_HOC}}</td>
+                            <td>{{TEN_HP}}</td>
+                            <td>{{TEN_LOP}}</td>
+                            <td>{{PHONG_HOC}}</td>
+                            <td>Thứ {{LICH_HOC}}: {{TIET_BAT_DAU}} - {{TIET_KET_THUC}}</td>
+                            <td>{{HO_TEN}}</td>
+                            <td>{{NGAY_BAT_DAU}}</td>
+                            <td>
+                                <p data-placement="top" data-toggle="tooltip" title="Chỉnh sửa">
+                                    <button class="btn btn-primary btn-xs btnEditClass" data-title="Edit" data-toggle="modal" data-target="#edit" data-id="{{ID_LOP_HOC}}" data-room="{{PHONG_HOC}}" data-teacherid="{{ID_GIAO_VIEN}}"
+                                        data-courseid="{{MA_HP}}" data-class="{{TEN_LOP}}" data-day="{{LICH_HOC}}" data-start="{{TIET_BAT_DAU}}" data-end="{{TIET_KET_THUC}}" data-firstday="{{NGAY_BAT_DAU}}">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </button></p>
+                            </td>
+                            <td>
+                                <p data-placement="top" data-toggle="tooltip" title="Xóa">
+                                    <button class="btn btn-danger btn-xs btnDelClass" data-title="Delete" data-toggle="modal" data-target="#delete" data-id="{{ID_LOP_HOC}}">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button></p>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add class modal -->
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/admin/classesManage/add" method="post" onsubmit="return validateAddClassForm();">
+                <div class="modal-header">
+                    <h4 class="modal-title custom_align" id="Heading"> Thêm lớp học</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <div class="col">
+                            <input id="edtAddID" class="form-control edtClassID" name="id" type="text" maxlength="8" placeholder="Mã lớp học" value="LH">
+                        </div>
+                        <div class="col">
+                            <input id="edtAddName" class="form-control" name="class" type="text" maxlength="6" placeholder="Tên lớp học" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <select id="addCourseID" name="courseID" class="form-control">
+                        {{#each listCourses}}
+                            <option value="{{MA_HP}}">{{MA_HP}} - {{TEN_HP}}</option>
+                        {{/each}}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select id="addTeacherID" name="teacherID" class="form-control">
+                        {{#each listTeachers}}
+                            <option value="{{ID_GIAO_VIEN}}">{{ID_GIAO_VIEN}} - {{HO_TEN}}</option>
+                        {{/each}}
+                        </select>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <select id="addDay" name="day" class="form-control">
+                                <option selected value='2'>Thứ 2</option>
+                                <option value="3">Thứ 3</option>
+                                <option value="4">Thứ 4</option>
+                                <option value="5">Thứ 5</option>
+                                <option value="6">Thứ 6</option>
+                                <option value="7">Thứ 7</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <input id="edtAddRoom" class="form-control" name="room" type="text" maxlength="5" placeholder="Phòng học" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-3">
+                            <input id="edtAddStart" class="form-control" name="start" type="number" min="1" max="10" placeholder="Tiết bắt đầu" required>
+                        </div>
+                        <div class="col-3">
+                            <input id="edtAddEnd" class="form-control" name="end" type="number" min="1" max="10" placeholder="Tiết kết thúc" required>
+                        </div>
+                        <div class="col-6">
+                            <input id="edtAddFirstDay" class="form-control" name="firstday" type="date" placeholder="Ngày bắt đầu" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer ">
+                    <button type="submit" class="btn btn-success" id="btnCommitAddCourse" ><i class="fa fa-plus" aria-hidden="true"></i> Xác nhận</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Hủy bỏ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete class modal -->
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title custom_align" id="Heading"> Xóa lớp học</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger"><i class="fas fa-exclamation-triangle"></i> Chắn chắc muốn xóa lớp học này?</div>
+            </div>
+
+            <div class="modal-footer ">
+                <form action="/admin/classesManage/delete" method="post">
+                    <button type="submit" class="btn btn-success" id="btnCommitDelClass" name="id"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Xác nhận</button>
+                </form>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Hủy bỏ</button>
+            </div>
+        </div>
+  </div>
+</div>
+
+<!-- Edit class modal -->
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/admin/classesManage/edit" method="post" onsubmit="return validateEditClassForm();">
+                <div class="modal-header">
+                    <h4 class="modal-title custom_align" id="Heading"> Chỉnh sửa thông tin lớp học</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group row">
+                        <div class="col">
+                            <input id="edtID" class="form-control edtClassID" name="id" type="text" maxlength="8" placeholder="Mã lớp học" readonly>
+                        </div>
+                        <div class="col">
+                            <input id="edtName" class="form-control" name="class" type="text" maxlength="6" placeholder="Tên lớp học" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <select id="courseID" name="courseID" class="form-control">
+                        {{#each listCourses}}
+                            <option value="{{MA_HP}}">{{MA_HP}} - {{TEN_HP}}</option>
+                        {{/each}}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select id="teacherID" name="teacherID" class="form-control">
+                        {{#each listTeachers}}
+                            <option value="{{ID_GIAO_VIEN}}">{{ID_GIAO_VIEN}} - {{HO_TEN}}</option>
+                        {{/each}}
+                        </select>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <select id="day" name="day" class="form-control">
+                                <option selected value='2'>Thứ 2</option>
+                                <option value="3">Thứ 3</option>
+                                <option value="4">Thứ 4</option>
+                                <option value="5">Thứ 5</option>
+                                <option value="6">Thứ 6</option>
+                                <option value="7">Thứ 7</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <input id="edtRoom" class="form-control" name="room" type="text" maxlength="5" placeholder="Phòng học" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-3">
+                            <input id="edtStart" class="form-control" name="start" type="number" min="1" max="10" placeholder="Tiết bắt đầu" required>
+                        </div>
+                        <div class="col-3">
+                            <input id="edtEnd" class="form-control" name="end" type="number" min="1" max="10" placeholder="Tiết kết thúc" required>
+                        </div>
+                        <div class="col-6">
+                            <input id="edtFirstDay" class="form-control" name="firstday" type="date" placeholder="Ngày bắt đầu" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer ">
+                    <button type="submit" class="btn btn-success" id="btnCommitEditClass" ><i class="fa fa-upload" aria-hidden="true"></i> Cập nhật</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Hủy bỏ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,121 @@
+<h1>Quản lý học phần</h1>
+<div class="container">
+    <div class="row justify-content-end">
+        <p data-placement="top" data-toggle="tooltip" title="Thêm học phần">
+            <button type="button" class="btn btn-success btn-s btnAddCourse" data-title="Add" data-toggle="modal" data-target="#add">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Thêm học phần
+            </button>
+        </p>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table id="mytable" class="table table-bordred table-striped">
+                    <thead>
+                        <tr>
+                            <th>Mã học phần</th>
+                            <th>Tên học phần</th>
+                            <th>Chỉnh sửa</th>
+                            <th>Xóa</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {{#each listCourses}}
+                        <tr>
+                            <td>{{MA_HP}}</td>
+                            <td>{{TEN_HP}}</td>
+                            <td>
+                                <p data-placement="top" data-toggle="tooltip" title="Chỉnh sửa">
+                                    <button class="btn btn-primary btn-xs btnEditCourse" data-title="Edit" data-toggle="modal" data-target="#edit" data-courseid="{{MA_HP}}" data-coursename="{{TEN_HP}}">
+                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                    </button></p>
+                            </td>
+                            <td>
+                                <p data-placement="top" data-toggle="tooltip" title="Xóa">
+                                    <button class="btn btn-danger btn-xs btnDelCourse" data-title="Delete" data-toggle="modal" data-target="#delete" data-id="{{MA_HP}}">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </button></p>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add course modal -->
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/admin/coursesManage/add" method="post">
+                <div class="modal-header">
+                    <h4 class="modal-title custom_align" id="Heading"> Thêm học phần</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input id="edtAddName" class="form-control" name="name" type="text" placeholder="Tên học phần" required>
+                    </div>
+                    <div class="form-group">
+                        <input id="edtAddID" class="form-control edtCourseID col-4" name="id" type="text" maxlength="8" placeholder="Mã học phần" required>
+                    </div>
+                </div>
+
+                <div class="modal-footer ">
+                    <button type="submit" class="btn btn-success" id="btnCommitAddCourse" ><i class="fa fa-plus" aria-hidden="true"></i> Xác nhận</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Hủy bỏ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete course modal -->
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title custom_align" id="Heading"> Xóa học phần</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger"><i class="fas fa-exclamation-triangle"></i> Chắn chắc muốn xóa học phần này?</div>
+            </div>
+
+            <div class="modal-footer ">
+                <form action="/admin/coursesManage/delete" method="post">
+                    <button type="submit" class="btn btn-success" id="btnCommitDelCourse" name="id"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Xác nhận</button>
+                </form>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Hủy bỏ</button>
+            </div>
+        </div>
+  </div>
+</div>
+
+<!-- Edit course modal -->
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/admin/coursesManage/edit" method="post">
+                <div class="modal-header">
+                    <h4 class="modal-title custom_align" id="Heading"> Chỉnh sửa thông tin học phần</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input id="edtName" class="form-control" name="name" type="text" placeholder="Tên học phần" required>
+                    </div>
+                    <div class="form-group">
+                        <input id="edtID" class="form-control edtCourseID col-4" name="id" type="text" placeholder="Mã học phần" readonly>
+                    </div>
+                </div>
+
+                <div class="modal-footer ">
+                    <button type="submit" class="btn btn-success" id="btnCommitEditCourse" ><i class="fa fa-upload" aria-hidden="true"></i> Cập nhật</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Hủy bỏ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

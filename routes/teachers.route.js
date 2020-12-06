@@ -73,6 +73,35 @@ router.get('/list_students/:id', async (req, res) => {
         list: list,
         itemSelected: id,
     })
+});
+
+router.get('/statistic', async (req, res) => {
+    const title = [
+        {content: 'Học sinh trượt', id: 'failed'},
+        {content: 'Học sinh qua môn', id: 'success'},
+        {content: 'Học sinh TB > 8', id: 'pro'},
+    ];
+    res.render('teachers/statistic', {title: title,});
+});
+
+router.get('/statistic/:id', async (req, res) => {
+    const title = [
+        {content: 'Học sinh trượt', id: 'failed'},
+        {content: 'Học sinh qua môn', id: 'success'},
+        {content: 'Học sinh TB > 8', id: 'pro'},
+    ];
+    const itemSelected = req.params.id;
+    let data;
+    if (itemSelected == 'failed') {
+        data = await teachersModel.getStudentsFailed(req.session.username);
+    } else if (itemSelected == 'success') {
+        data = await teachersModel.getStudentsSuccess(req.session.username);
+    } else data = await teachersModel.getStudentsPro(req.session.username);
+
+    res.render('teachers/statistic', {
+        title: title,
+        data: data,
+    })
 })
 
 module.exports = router;
