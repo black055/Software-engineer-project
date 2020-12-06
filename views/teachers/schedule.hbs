@@ -5,16 +5,20 @@
       <div class="table-responsive">
         <table id="mytable" class="table table-bordred table-striped">
           <thead>
+            <th>Mã môn học</th>
             <th>Môn học</th>
             <th>Phòng học</th>
-            <th>Lớp</th>
-            <th>Lịch học</th>
+            <th>Mã lớp học</th>
+            <th>Tên lớp học</th>
+            <th>Lịch dạy</th>
           </thead>
           <tbody>
             {{#each schedule}}
             <tr>
+              <td>{{MA_HP}}</td>
               <td>{{TEN_HP}}</td>
               <td>{{PHONG_HOC}}</td>
+              <td>{{ID_LOP_HOC}}</td>
               <td>{{TEN_LOP}}</td>
               <td>Thứ {{LICH_HOC}}: {{TIET_BAT_DAU}} - {{TIET_KET_THUC}}</td>
             </tr>

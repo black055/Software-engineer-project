@@ -18,15 +18,13 @@
 
 })(jQuery);
 
-$(document).ready(function(){
-	$('.btnEditScore').click(function() {
-		$('#edtLP').val($(this).data("lh"));
-		$('#edtID').val($(this).data("id"));
-		$('#edtHT').val($(this).data("name"));
-		$('#edtDGK').val($(this).data("gk"));
-		$('#edtDCK').val($(this).data("ck"));
-		$('#edtDTK').val($(this).data("tk"));
-	})
+$('.btnEditScore').click(function() {
+	$('#edtLP').val($(this).data("lh"));
+	$('#edtID').val($(this).data("id"));
+	$('#edtHT').val($(this).data("name"));
+	$('#edtDGK').val($(this).data("gk"));
+	$('#edtDCK').val($(this).data("ck"));
+	$('#edtDTK').val($(this).data("tk"));
 });
 
 $('#form_edit_score').submit(function() {
@@ -40,9 +38,6 @@ $('#form_edit_score').submit(function() {
 	};
 	
 });
-
-//document.getElementById('select_classes').addEventListener('change', handleChangeManageScore, true);
-//document.getElementById('select_classes_students').addEventListener('change', handleChangeListStudent);
 
 $('#select_classes').on('change', function(e) {
 	e.preventDefault();

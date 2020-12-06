@@ -23,14 +23,6 @@ router.get('/schedule', async (req, res) => {
     });
 });
 
-router.get('/list_class', async (req, res) => {
-    const data = await teachersModel.getListClass(req.session.username);
-    res.render('teachers/listClass', {
-        isListClass: true,
-        listClass: data,
-    })
-});
-
 router.get('/manage_score', async (req, res) => {
     const data = await teachersModel.getAllClasses(req.session.username);
     res.render('teachers/manageScore', {
