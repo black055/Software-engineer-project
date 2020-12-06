@@ -43,7 +43,7 @@ module.exports = {
                     // Có tồn tại lớp học có ID tương ứng
                     db.query(`UPDATE ${TABLE_CLASSES} SET MA_HP='${classInfo.courseID}',ID_GIAO_VIEN='${classInfo.teacherID}',
                     TEN_LOP='${classInfo.class}',NGAY_BAT_DAU='${classInfo.firstday}',PHONG_HOC='${classInfo.room}',LICH_HOC='${classInfo.day}',
-                    TIET_BAT_DAU='${classInfo.start}',TIET_KET_THUC='${classInfo.end}'`).then(() => {resolve(true);});
+                    TIET_BAT_DAU='${classInfo.start}',TIET_KET_THUC='${classInfo.end}' WHERE ID_LOP_HOC = '${classInfo.id}'`).then(() => {resolve(true);});
                 }  else {
                     // Không tồn tại lớp học có ID tương ứng
                     resolve(false);
