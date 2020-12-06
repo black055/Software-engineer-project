@@ -33,16 +33,13 @@ router.get('/updatePassword', async (req, res) => {
 router.post('/changePassword', async (req, res) => {
     const passwords = await teachersModel.getTeacherAccount(req.session.username);
     const password = passwords[0];
-    console.log(req.body.oldPass, password);
     bcrypt.compare(req.body.oldPass, password['MAT_KHAU'], function (err, result) {
         if (result == true) {
-            console.log("Mat khau dung");
             bcrypt.hash(req.body.newPass, 10, async function (e, hash) {
                 await teachersModel.updateTeacherPassword(req.session.username, hash);
             })
             res.redirect('/teachers/information');
         } else {
-            console.log("Mat khau sai");
             res.render('teachers/password', {message: "Mật khẩu cũ không đúng."});
         }
     })
