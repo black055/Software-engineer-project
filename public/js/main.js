@@ -179,7 +179,7 @@ $('#canleEdit').click(function() {
 $('#name').keyup(function() {
   if (!$(this).val()) {
     $(this).addClass('is-invalid');
-    $('#divName').append("<div class=\"invalid-feedback\">Tên chưa hợp lệ.</div>");
+    $('#divName').append(`<div class="invalid-feedback">Tên chưa hợp lệ.</div>`);
     $('#updateInfo').prop('disabled',true);
   } else {
     $(this).removeClass('is-invalid');
@@ -190,7 +190,7 @@ $('#name').keyup(function() {
 $('#sdt').keyup(function() {
   if (!$(this).val()) {
     $(this).addClass('is-invalid');
-    $('#divSDT').append("<div class=\"invalid-feedback\">Số điện thoại không hợp lệ</div>");
+    $('#divSDT').append(`<div class="invalid-feedback">Số điện thoại không hợp lệ</div>`);
     $('#updateInfo').prop('disabled',true);
   } else {
     $(this).removeClass('is-invalid');
@@ -203,7 +203,7 @@ $('#oldPass').blur(function () {
   if (!$(this).val() || $(this).val().length < 8) {
     if ($('#divOldPass').children().length < 3) {
       $(this).addClass('is-invalid');
-      $('#divOldPass').append("<div class=\"invalid-feedback\">Mật khẩu phải có ít nhất 8 ký tự.</div>");
+      $('#divOldPass').append(`<div class="invalid-feedback">Mật khẩu phải có ít nhất 8 ký tự.</div>`);
     }
   } else {
     $(this).removeClass('is-invalid');
@@ -214,7 +214,7 @@ $('#newPass').blur(function () {
   if (!$(this).val() || $(this).val().length < 8) {
     if ($('#divNewPass').children().length < 3) {
       $(this).addClass('is-invalid');
-      $('#divNewPass').append("<div class=\"invalid-feedback\">Mật khẩu phải có ít nhất 8 ký tự.</div>");
+      $('#divNewPass').append(`<div class="invalid-feedback">Mật khẩu phải có ít nhất 8 ký tự.</div>`);
     }
   } else {
     $(this).removeClass('is-invalid');
@@ -225,7 +225,7 @@ $('#newPassAgain').blur(function () {
   if (!$(this).val() || $(this).val().length < 8) {
     if ($('#divNewPassAgain').children().length < 3) {
       $(this).addClass('is-invalid');
-      $('#divNewPassAgain').append("<div class=\"invalid-feedback\">Mật khẩu phải có ít nhất 8 ký tự.</div>");
+      $('#divNewPassAgain').append(`<div class="invalid-feedback">Mật khẩu phải có ít nhất 8 ký tự.</div>`);
     }
   } else {
     $(this).removeClass('is-invalid');
@@ -240,7 +240,7 @@ $('#form_update_pass').submit(function() {
 
     if ($('#divOldPass').children().length < 3) {
       $('#oldPass').addClass('is-invalid');
-      $('#divOldPass').append("<div class=\"invalid-feedback\">Mật khẩu phải có ít nhất 8 ký tự.</div>");
+      $('#divOldPass').append(`<div class="invalid-feedback">Mật khẩu phải có ít nhất 8 ký tự.</div>`);
     };
     return false;
   }
@@ -252,7 +252,7 @@ $('#form_update_pass').submit(function() {
 
     if ($('#divNewPass').children().length < 3) {
       $('#newPass').addClass('is-invalid');
-      $('#divNewPass').append("<div class=\"invalid-feedback\">Mật khẩu phải có ít nhất 8 ký tự.</div>");
+      $('#divNewPass').append(`<div class="invalid-feedback">Mật khẩu phải có ít nhất 8 ký tự.</div>`);
     }
     return false;
   }
@@ -264,7 +264,7 @@ $('#form_update_pass').submit(function() {
 
     if ($('#divNewPassAgain').children().length < 3) {
       $('#newPassAgain').addClass('is-invalid');
-      $('#divNewPassAgain').append("<div class=\"invalid-feedback\">Mật khẩu phải có ít nhất 8 ký tự.</div>");
+      $('#divNewPassAgain').append(`<div class="invalid-feedback">Mật khẩu phải có ít nhất 8 ký tự.</div>`);
     }
     return false;
   }
@@ -275,7 +275,7 @@ $('#form_update_pass').submit(function() {
     }
     if ($('#divNewPassAgain').children().length < 3) {
       $('#newPassAgain').addClass('is-invalid');
-      $('#divNewPassAgain').append("<div class=\"invalid-feedback\">Không trùng khớp với mật khẩu mới đã nhập.</div>");
+      $('#divNewPassAgain').append(`<div class="invalid-feedback">Không trùng khớp với mật khẩu mới đã nhập.</div>`);
     }
     return false;
   }

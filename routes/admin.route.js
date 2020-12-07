@@ -5,8 +5,15 @@ const classesModule = require('../models/classes.module');
 const coursesModule = require('../models/courses.module');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.render('admin/admin');
+router.get('/', async (req, res) => {
+    const data = await classesModule.getAll();
+    const courses = await coursesModule.getAll();
+    const teachers = await teachersModule.getAll();
+    res.render('admin/classesManage', {
+        listClasses: data,
+        listCourses: courses,
+        listTeachers: teachers,
+    });
 })
 
 router.get('/studentsManage', async (req, res) => {

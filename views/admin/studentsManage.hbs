@@ -57,7 +57,7 @@
 <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="/admin/studentsManage/edit" method="post" onsubmit="return validateEditForm();">
+            <form action="/admin/studentsManage/edit" method="post" id="student-edit-form">
                 <div class="modal-header">
                     <h4 class="modal-title custom_align" id="Heading"> Chỉnh sửa thông tin học sinh</h4>
                 </div>
@@ -65,7 +65,7 @@
                     <div class="form-group">
                         <input id="edtName" class="form-control" name="name" type="text" placeholder="Họ tên" required>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row" id="id-birthday-edit-error">
                         <div class="col">
                             <input id="edtID" class="form-control" name="id" type="text" placeholder="Mã số sinh viên" readonly>
                         </div>
@@ -92,7 +92,7 @@
 <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="/admin/studentsManage/add" method="post" onsubmit="return validateAddForm();">
+            <form action="/admin/studentsManage/add" method="post" id="student-add-form">
                 <div class="modal-header">
                     <h4 class="modal-title custom_align" id="Heading"> Thêm học sinh</h4>
                 </div>
@@ -100,7 +100,7 @@
                     <div class="form-group">
                         <input id="edtAddName" class="form-control" name="name" type="text" placeholder="Họ tên" required>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row" id="id-birthday-add-error">
                         <div class="col">
                             <input id="edtAddID" class="form-control" name="id" maxlength="8" type="text" onkeypress="return onlyNumber(event)" placeholder="Mã số sinh viên">
                         </div>

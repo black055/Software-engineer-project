@@ -55,7 +55,7 @@
 <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="add" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="/admin/teachersManage/add" method="post" onsubmit="return validateAddForm();">
+            <form action="/admin/teachersManage/add" method="post" id="teacher-add-form">
                 <div class="modal-header">
                     <h4 class="modal-title custom_align" id="Heading"> Thêm giáo viên</h4>
                 </div>
@@ -63,7 +63,7 @@
                     <div class="form-group">
                         <input id="edtAddName" class="form-control" name="name" type="text" placeholder="Họ tên" required>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row" id="id-birthday-add-error">
                         <div class="col">
                             <input id="edtAddID" class="form-control edtTeacherID" name="id" type="text" maxlength="8" placeholder="Mã giáo viên" value="GV">
                         </div>
@@ -118,7 +118,7 @@
 <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="/admin/teachersManage/edit" method="post" onsubmit="return validateEditForm();">
+            <form action="/admin/teachersManage/edit" method="post" id="teacher-edit-form">
                 <div class="modal-header">
                     <h4 class="modal-title custom_align" id="Heading"> Chỉnh sửa thông tin giáo viên</h4>
                 </div>
@@ -126,7 +126,7 @@
                   <div class="form-group">
                         <input id="edtName" class="form-control" name="name" type="text" placeholder="Họ tên" required>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row" id="id-birthday-edit-error">
                         <div class="col">
                             <input id="edtID" class="form-control" name="id" type="text" placeholder="Mã giáo viên" readonly>
                         </div>
