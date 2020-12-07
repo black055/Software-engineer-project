@@ -1,0 +1,27 @@
+<div class="form-group col-md-3">
+  <label for="idSV">Mã sinh viên</label>
+  <input type="text" class="form-control" id="idSV" name="idSV" value={{info.ID_HOC_SINH}} readonly>
+</div>
+
+<div class="form-group col-md-3" id="divName">
+  <label for="name">Họ và tên</label>
+  <input type="text" class="form-control" id="name" name="name" value="{{info.HO_TEN}}" readonly>
+</div>
+
+<div class="form-group col-md-3">
+  <label for="gender">Giới tính</label>
+  <select id="gender" name="sex" class="form-control" disabled>
+    {{#if (male info.GIOI_TINH)}}
+    <option value='Nam' selected>Nam</option>
+    <option value='Nữ'>Nữ</option>
+    {{else}}
+    <option value='Nam'>Nam</option>
+    <option value='Nữ' selected>Nữ</option>
+    {{/if}}
+  </select>
+</div>
+
+<div class="form-group col-md-3">
+  <label for="bthday">Ngày sinh</label>
+  <input type="date" class="form-control" id="bthday" name="bthday" value={{info.NGAY_SINH}} readonly>
+</div>

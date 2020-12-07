@@ -12,8 +12,16 @@ router.get('/', async (req, res) => {
     //         console.log(`insert into ACCOUNT_HOC_SINH (ID_HOC_SINH,MAT_KHAU) values ('${account['ID_HOC_SINH']}','${hash}');`)
     //     })
     // })
-    res.render('students/students');
+    /* res.render('students/students'); */
+    res.redirect('/students/info');
 });
+
+router.get('/info', async (req, res) => {
+    const data = await studentsModel.getInfoStudent(req.session.username);
+    res.render('students/info', {
+        info: data[0],
+    })
+})
 
 router.get('/timetable', async (req, res) => {
     const data = await studentsModel.getTimetable(req.session.username);
@@ -71,7 +79,7 @@ router.post('/newPass', async (req, res) => {
             })
             res.redirect('/students');
         } else {
-            res.render('students/changePassword', {message: "Mật khẩu cũ không đúng."});
+            res.render('students/changePassword', { message: "Mật khẩu cũ không đúng." });
         }
     })
 });

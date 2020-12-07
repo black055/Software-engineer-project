@@ -199,4 +199,8 @@ module.exports = {
         AND BANG_DIEM.DIEM_TK >= 8`);
     },
 
+    getInfoStudent (idStudent) {
+        return db.query(`SELECT * FROM HOC_SINH WHERE ID_HOC_SINH = '${idStudent}'`)
+    },
+
 }
