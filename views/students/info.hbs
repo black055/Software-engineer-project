@@ -10,15 +10,7 @@
 
 <div class="form-group col-md-3">
   <label for="gender">Giới tính</label>
-  <select id="gender" name="sex" class="form-control" disabled>
-    {{#if (male info.GIOI_TINH)}}
-    <option value='Nam' selected>Nam</option>
-    <option value='Nữ'>Nữ</option>
-    {{else}}
-    <option value='Nam'>Nam</option>
-    <option value='Nữ' selected>Nữ</option>
-    {{/if}}
-  </select>
+  <input type="text" class="form-control" id="gender" name="gender" value={{info.GIOI_TINH}} readonly>
 </div>
 
 <div class="form-group col-md-3">

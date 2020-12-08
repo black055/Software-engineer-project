@@ -17,29 +17,29 @@
 $(document).ready(function () {
   $("#mytable").DataTable({
     "language": {
-      "decimal":        "",
-      "emptyTable":     "Không có dữ liệu",
-      "info":           "Đang hiển thị _START_ đến _END_ của _TOTAL_ dòng",
-      "infoEmpty":      "Đang hiển thị 0 đến 0 của 0 dòng",
-      "infoFiltered":   "(đã lọc từ _MAX_ dòng dữ liệu)",
-      "infoPostFix":    "",
-      "thousands":      ",",
-      "lengthMenu":     "Hiện _MENU_ dòng",
+      "decimal": "",
+      "emptyTable": "Không có dữ liệu",
+      "info": "Đang hiển thị _START_ đến _END_ của _TOTAL_ dòng",
+      "infoEmpty": "Đang hiển thị 0 đến 0 của 0 dòng",
+      "infoFiltered": "(đã lọc từ _MAX_ dòng dữ liệu)",
+      "infoPostFix": "",
+      "thousands": ",",
+      "lengthMenu": "Hiện _MENU_ dòng",
       "loadingRecords": "Loading...",
-      "processing":     "Processing...",
-      "search":         "Tìm kiếm:",
-      "zeroRecords":    "Không tìm thấy kết quả trùng khớp",
+      "processing": "Processing...",
+      "search": "Tìm kiếm:",
+      "zeroRecords": "Không tìm thấy kết quả trùng khớp",
       "paginate": {
-          "first":      "Đầu",
-          "last":       "Cuối",
-          "next":       "Sau",
-          "previous":   "Trước"
+        "first": "Đầu",
+        "last": "Cuối",
+        "next": "Sau",
+        "previous": "Trước"
       },
       "aria": {
-          "sortAscending":  ": activate to sort column ascending",
-          "sortDescending": ": activate to sort column descending"
+        "sortAscending": ": activate to sort column ascending",
+        "sortDescending": ": activate to sort column descending"
       }
-  },
+    },
   });
 });
 
@@ -55,19 +55,19 @@ $(".btnDelStudent").click(function () {
   $("#btnCommitDelStudent").val($(this).val());
 });
 
-$('.btnEditScore').click(function() {
-	$('#edtLP').val($(this).data("lh"));
-	$('#edtID').val($(this).data("id"));
-	$('#edtHT').val($(this).data("name"));
-	$('#edtDGK').val($(this).data("gk"));
-	$('#edtDCK').val($(this).data("ck"));
-	$('#edtDTK').val($(this).data("tk"));
+$('.btnEditScore').click(function () {
+  $('#edtLP').val($(this).data("lh"));
+  $('#edtID').val($(this).data("id"));
+  $('#edtHT').val($(this).data("name"));
+  $('#edtDGK').val($(this).data("gk"));
+  $('#edtDCK').val($(this).data("ck"));
+  $('#edtDTK').val($(this).data("tk"));
 });
 
 $('#form_edit_score').submit(function () {
-  if ($('#edtDGK').val() < 0 || $('#edtDCK').val() < 0 || $('#edtDTK').val() < 0 || 
-  $('#edtDGK').val() > 10 || $('#edtDCK').val() > 10 || $('#edtDTK').val() > 10 || 
-  $('#edtDGK').val().length == 0 || $('#edtDCK').val().length == 0 || $('#edtDTK').val().length == 0) {
+  if ($('#edtDGK').val() < 0 || $('#edtDCK').val() < 0 || $('#edtDTK').val() < 0 ||
+    $('#edtDGK').val() > 10 || $('#edtDCK').val() > 10 || $('#edtDTK').val() > 10 ||
+    $('#edtDGK').val().length == 0 || $('#edtDCK').val().length == 0 || $('#edtDTK').val().length == 0) {
     if ($('#edtDGK').prev().attr('id') != 'alert') {
       $('#edtDGK').before(`<div class="alert alert-danger alert-dismissible fade show" id="alert">
 		 Điểm số có giá trị từ 0 đến 10
@@ -78,10 +78,10 @@ $('#form_edit_score').submit(function () {
 
 });
 
-$('#select_classes').on('change', function(e) {
-	e.preventDefault();
-	e.stopPropagation();
-    window.location = `/teachers/manage_score/${e.currentTarget.value}`;
+$('#select_classes').on('change', function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+  window.location = `/teachers/manage_score/${e.currentTarget.value}`;
 });
 
 // List students
@@ -124,15 +124,36 @@ $(".enroll-cb").click(function () {
 });
 
 $("#btn-enroll").click(async function () {
-  await $(".enroll-cb:checked", $("#mytable").dataTable().fnGetNodes()).each(function () {
-    $("#enroll-form").append(`<input type="hidden" name="classes" value="${$(this).data('idclass')}" />`);
-  })
-  $("#enroll-form").submit();
+  if ($(".enroll-cb:checked", $("#mytable").dataTable().fnGetNodes()).length) {
+    await $(".enroll-cb:checked", $("#mytable").dataTable().fnGetNodes()).each(function () {
+      $("#enroll-form").append(`<input type="hidden" name="classes" value="${$(this).data('idclass')}" />`);
+    })
+    $("#enroll-form").submit();
+  }
+  else {
+    Swal.fire({
+      icon: 'error',
+      title: 'Lỗi!',
+      text: 'Bạn chưa chọn học phần đăng ký',
+    })
+  }
 });
 
-$('.btn-unenroll').click(async function () {
-  await $("#unenroll-form").append(`<input type="hidden" name="classEnrolled" value="${$(this).data('idclass')}" />`);
-  $("#unenroll-form").submit();
+$('.btn-unenroll').click(function () {
+  Swal.fire({
+    title: 'Bạn có chắc không?',
+    text: "Bạn không thể hoàn lại học phần đã hủy!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Xóa!'
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      await $("#unenroll-form").append(`<input type="hidden" name="classEnrolled" value="${$(this).data('idclass')}" />`);
+      $("#unenroll-form").submit();
+    }
+  })
 });
 
 
@@ -141,7 +162,7 @@ let name, gender, bthday, sdt;
 $('#updateInfo').hide();
 $('#canleEdit').hide();
 
-$('#editInfo').click(function() {
+$('#editInfo').click(function () {
   $(this).prop('disabled', true);
   $('#updateInfo').show();
   $('#canleEdit').show();
@@ -157,7 +178,7 @@ $('#editInfo').click(function() {
   sdt = $('#sdt').val();
 });
 
-$('#canleEdit').click(function() {
+$('#canleEdit').click(function () {
   $(this).hide();
   $('#updateInfo').hide();
   $('#editInfo').prop('disabled', false);
@@ -176,25 +197,25 @@ $('#canleEdit').click(function() {
   $('#sdt').removeClass('is-invalid');
 });
 
-$('#name').keyup(function() {
+$('#name').keyup(function () {
   if (!$(this).val()) {
     $(this).addClass('is-invalid');
     $('#divName').append(`<div class="invalid-feedback">Tên chưa hợp lệ.</div>`);
-    $('#updateInfo').prop('disabled',true);
+    $('#updateInfo').prop('disabled', true);
   } else {
     $(this).removeClass('is-invalid');
-    $('#updateInfo').prop('disabled',false);
+    $('#updateInfo').prop('disabled', false);
   }
 });
 
-$('#sdt').keyup(function() {
+$('#sdt').keyup(function () {
   if (!$(this).val()) {
     $(this).addClass('is-invalid');
     $('#divSDT').append(`<div class="invalid-feedback">Số điện thoại không hợp lệ</div>`);
-    $('#updateInfo').prop('disabled',true);
+    $('#updateInfo').prop('disabled', true);
   } else {
     $(this).removeClass('is-invalid');
-    $('#updateInfo').prop('disabled',false);
+    $('#updateInfo').prop('disabled', false);
   }
 });
 
@@ -232,7 +253,7 @@ $('#newPassAgain').blur(function () {
   }
 });
 
-$('#form_update_pass').submit(function() {
+$('#form_update_pass').submit(function () {
   if (!$('#oldPass').val() || $('#oldPass').val().length < 8) {
     if ($('#divOldPass').children().length == 3) {
       $('#divOldPass').children().last().remove();

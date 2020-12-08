@@ -49,7 +49,7 @@ router.get('/enroll', async (req, res) => {
 
 router.post('/enroll_classes', async (req, res) => {
     await studentsModel.enrollSubject(req.session.username, req.body.classes);
-    res.redirect(`/students`);
+    res.redirect(`/students/info`);
 })
 
 router.get('/unenroll', async (req, res) => {
@@ -62,7 +62,7 @@ router.get('/unenroll', async (req, res) => {
 
 router.post('/unenroll_class', async (req, res) => {
     await studentsModel.unenrollSubject(req.session.username, req.body.classEnrolled);
-    res.redirect(`/students`);
+    res.redirect(`/students/info`);
 })
 
 router.get('/password', async (req, res) => {
@@ -77,7 +77,7 @@ router.post('/newPass', async (req, res) => {
             bcrypt.hash(req.body.newPass, 10, async function (e, hash) {
                 await studentsModel.changePass(req.session.username, hash);
             })
-            res.redirect('/students');
+            res.redirect('/students/info');
         } else {
             res.render('students/changePassword', { message: "Mật khẩu cũ không đúng." });
         }

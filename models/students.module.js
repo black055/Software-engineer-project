@@ -95,7 +95,7 @@ module.exports = {
     },
 
     getScoreTable(idStudent) {
-        return db.query(`SELECT BANG_DIEM.DIEM_TK, HOC_PHAN.TEN_HP
+        return db.query(`SELECT BANG_DIEM.*, HOC_PHAN.TEN_HP
         FROM BANG_DIEM, HOC_PHAN, LOP_HOC
         WHERE LOP_HOC.ID_LOP_HOC = BANG_DIEM.ID_LOP_HOC
         AND HOC_PHAN.MA_HP = LOP_HOC.MA_HP
