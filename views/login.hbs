@@ -15,8 +15,11 @@
 <body>
     <div class="container ">
         <h1 class="text-center">Đăng nhập</h1>
-        {{#if session.message}}
-            <div class="alert alert-danger col-md-6 mx-auto">{{session.message}}</div>
+        {{#if message}}
+        <div class="alert alert-danger alert-dismissible fade show col-md-6 mx-auto" id="alert">
+            {{message}}
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
         {{/if}}
         <form method="post" action="/login">
             <div class="form-group col-md-6 mx-auto">
@@ -29,8 +32,8 @@
             </div>
             <div class="row">
                 <div class="col text-center">
-                <button type="submit" class="btn btn-success btn-large">Đăng nhập</button>
-            </div>
+                    <button type="submit" class="btn btn-success btn-large">Đăng nhập</button>
+                </div>
             </div>
         </form>
     </div>

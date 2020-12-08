@@ -13,6 +13,10 @@ module.exports = {
         return db.getAll(TABLE_ACCOUNT_STUDENT);
     },
 
+    getOne(id) {
+        return db.query(`SELECT * FROM HOC_SINH WHERE ID_HOC_SINH = '${id}'`);
+    },
+
     addStudent(student) {
         // student(id, name, birthday, sex)
 
@@ -201,6 +205,45 @@ module.exports = {
 
     getInfoStudent (idStudent) {
         return db.query(`SELECT * FROM HOC_SINH WHERE ID_HOC_SINH = '${idStudent}'`)
+    },
+
+    getStudentsByClass(id_class, id_gv) {
+        return db.query(`SELECT HOC_SINH.ID_HOC_SINH, HO_TEN, GIOI_TINH, NGAY_SINH
+        FROM HOC_SINH, BANG_DIEM, LOP_HOC 
+        WHERE HOC_SINH.ID_HOC_SINH = BANG_DIEM.ID_HOC_SINH
+        AND BANG_DIEM.ID_LOP_HOC = LOP_HOC.ID_LOP_HOC
+        AND LOP_HOC.ID_GIAO_VIEN = '${id_gv}'
+        AND LOP_HOC.ID_LOP_HOC = '${id_class}'`);
+    },
+
+    getStudentsFailed (id_gv) {
+        return db.query(`SELECT BANG_DIEM.ID_HOC_SINH, HO_TEN, DIEM_TK, TEN_HP
+        FROM HOC_SINH, BANG_DIEM, LOP_HOC, HOC_PHAN
+        WHERE HOC_SINH.ID_HOC_SINH = BANG_DIEM.ID_HOC_SINH
+        AND BANG_DIEM.ID_LOP_HOC = LOP_HOC.ID_LOP_HOC
+        AND HOC_PHAN.MA_HP = LOP_HOC.MA_HP
+        AND LOP_HOC.ID_GIAO_VIEN = '${id_gv}'
+        AND BANG_DIEM.DIEM_TK < 5`);
+    },
+
+    getStudentsSuccess (id_gv) {
+        return db.query(`SELECT BANG_DIEM.ID_HOC_SINH, HO_TEN, DIEM_TK, TEN_HP
+        FROM HOC_SINH, BANG_DIEM, LOP_HOC, HOC_PHAN
+        WHERE HOC_SINH.ID_HOC_SINH = BANG_DIEM.ID_HOC_SINH
+        AND BANG_DIEM.ID_LOP_HOC = LOP_HOC.ID_LOP_HOC
+        AND HOC_PHAN.MA_HP = LOP_HOC.MA_HP
+        AND LOP_HOC.ID_GIAO_VIEN = '${id_gv}'
+        AND BANG_DIEM.DIEM_TK > 5`);
+    },
+
+    getStudentsPro (id_gv) {
+        return db.query(`SELECT BANG_DIEM.ID_HOC_SINH, HO_TEN, DIEM_TK, TEN_HP
+        FROM HOC_SINH, BANG_DIEM, LOP_HOC, HOC_PHAN
+        WHERE HOC_SINH.ID_HOC_SINH = BANG_DIEM.ID_HOC_SINH
+        AND BANG_DIEM.ID_LOP_HOC = LOP_HOC.ID_LOP_HOC
+        AND HOC_PHAN.MA_HP = LOP_HOC.MA_HP
+        AND LOP_HOC.ID_GIAO_VIEN = '${id_gv}'
+        AND BANG_DIEM.DIEM_TK >= 8`);
     },
 
 }

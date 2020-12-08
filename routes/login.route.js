@@ -8,13 +8,18 @@ router.get('/', (req, res) => {
         if (req.cookies.isTeacher == 'true') res.redirect('/teachers');
         else if (req.cookies.isStudent == 'true') res.redirect('/students');
         else res.redirect('/admin');
-    } else res.render('login', {layout: false});
+    } else {
+        const mess = req.session.message;
+        req.session.message = null;
+        res.render('login', {layout: false, message: mess});
+    }
 });
 
 router.post('/', (req, res) => {
     const {username, password} = req.body;
     const TABLE_ACCOUNT_TEACHER = 'ACCOUNT_GIAO_VIEN';
     const TABLE_ACCOUNT_STUDENT = 'ACCOUNT_HOC_SINH';
+    req.session.message = null;
 
     if (username && password && username != 'admin' && password != 'admin') {
         database.query(`SELECT * FROM ${TABLE_ACCOUNT_TEACHER} WHERE ID_GIAO_VIEN = ?`

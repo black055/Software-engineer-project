@@ -1,23 +1,25 @@
 const express = require('express');
 const router = express.Router();
 const teachersModel = require('../models/teachers.module');
+const studentsModel = require('../models/students.module');
 const bcrypt = require('bcrypt');
 const db = require('../utils/db');
+const studentsModule = require('../models/students.module');
+
+const teacherExist = async (id) => {
+    const data = await teachersModel.getOne(id);
+    return data.length;
+};
 
 router.get('/', async (req, res) => {
     const data = await teachersModel.getAllAccounts();
-    // data.forEach((account) => {
-    //     bcrypt.hash('123456789', 10, (e, hash) => {
-    //         db.query(`UPDATE ACCOUNT_GIAO_VIEN SET MAT_KHAU = '${hash}' WHERE ID_GIAO_VIEN = '${account['ID_GIAO_VIEN']}'`);
-    //         console.log(`insert into ACCOUNT_GIAO_VIEN (ID_GIAO_VIEN,MAT_KHAU) values ('${account['ID_GIAO_VIEN']}','${hash}');`);
-    //     })
-    // })
     res.redirect('/teachers/information');
 });
 
 router.get('/information', async (req, res) => {
     const data = await teachersModel.getInfoTeacher(req.session.username);
-    res.render('teachers/info', {data: data[0]});
+    if (!(await teacherExist(req.session.username))) res.redirect('/logout');
+    else res.render('teachers/info', {data: data[0]});
 });
 
 router.post('/updateInformation', async (req, res) => {
@@ -27,7 +29,8 @@ router.post('/updateInformation', async (req, res) => {
 });
 
 router.get('/updatePassword', async (req, res) => {
-    res.render('teachers/password');
+    if (!(await teacherExist(req.session.username))) res.redirect('/logout');
+    else res.render('teachers/password');
 });
 
 router.post('/changePassword', async (req, res) => {
@@ -46,31 +49,40 @@ router.post('/changePassword', async (req, res) => {
 })
 
 router.get('/schedule', async (req, res) => {
-    const data = await teachersModel.getSchedule(req.session.username);
-    res.render('teachers/schedule', {
+    if (!(await teacherExist(req.session.username))) res.redirect('/logout');
+    else {
+        const data = await teachersModel.getSchedule(req.session.username);
+        res.render('teachers/schedule', {
         isSchedule: true,
         schedule: data,
-    });
+        });
+    }
 });
 
 router.get('/manage_score', async (req, res) => {
-    const data = await teachersModel.getAllClasses(req.session.username);
-    res.render('teachers/manageScore', {
+    if (!(await teacherExist(req.session.username))) res.redirect('/logout');
+    else {
+        const data = await teachersModel.getAllClasses(req.session.username);
+        res.render('teachers/manageScore', {
         isCheckMark: true,
         mark: data,
-    });
+        });
+    }
 });
 
 router.get('/manage_score/:id', async (req, res) => {
-    const data = await teachersModel.getAllClasses(req.session.username);
-    const details = await teachersModel.getMarkByClass(req.session.username, req.params.id);
-    const id = req.params.id;
-    res.render('teachers/manageScore', {
-        isCheckMark: true,
-        mark: data,
-        details: details,
-        itemSelected: id,
-    });
+    if (!(await teacherExist(req.session.username))) res.redirect('/logout');
+    else {
+        const data = await teachersModel.getAllClasses(req.session.username);
+        const details = await teachersModel.getMarkByClass(req.session.username, req.params.id);
+        const id = req.params.id;
+        res.render('teachers/manageScore', {
+            isCheckMark: true,
+            mark: data,
+            details: details,
+            itemSelected: id,
+        });
+    }
 });
 
 router.post('/update_score', async (req, res) => {
@@ -80,50 +92,62 @@ router.post('/update_score', async (req, res) => {
 })
 
 router.get('/list_students', async (req, res) => {
-    const data = await teachersModel.getAllClasses(req.session.username);
-    res.render('teachers/listStudent', {
-        classes: data,
-    })
+    if (!(await teacherExist(req.session.username))) res.redirect('/logout');
+    else {
+        const data = await teachersModel.getAllClasses(req.session.username);
+        res.render('teachers/listStudent', {
+            classes: data,
+        })
+    }
 });
 
 router.get('/list_students/:id', async (req, res) => {
-    const data = await teachersModel.getAllClasses(req.session.username);
-    const list = await teachersModel.getStudentsByClass(req.params.id, req.session.username);
-    const id = req.params.id;
-    res.render('teachers/listStudent', {
-        classes: data,
-        list: list,
-        itemSelected: id,
-    })
+    if (!(await teacherExist(req.session.username))) res.redirect('/logout');
+    else {
+        const data = await teachersModel.getAllClasses(req.session.username);
+        const list = await studentsModel.getStudentsByClass(req.params.id, req.session.username);
+        const id = req.params.id;
+        res.render('teachers/listStudent', {
+            classes: data,
+            list: list,
+            itemSelected: id,
+        })
+    }
 });
 
 router.get('/statistic', async (req, res) => {
-    const title = [
-        {content: 'Học sinh trượt', id: 'failed'},
-        {content: 'Học sinh qua môn', id: 'success'},
-        {content: 'Học sinh TB > 8', id: 'pro'},
-    ];
-    res.render('teachers/statistic', {title: title,});
+    if (!(await teacherExist(req.session.username))) res.redirect('/logout');
+    else {
+        const title = [
+            {content: 'Học sinh trượt', id: 'failed'},
+            {content: 'Học sinh qua môn', id: 'success'},
+            {content: 'Học sinh TB > 8', id: 'pro'},
+        ];
+        res.render('teachers/statistic', {title: title,});
+    }
 });
 
 router.get('/statistic/:id', async (req, res) => {
-    const title = [
-        {content: 'Học sinh trượt', id: 'failed'},
-        {content: 'Học sinh qua môn', id: 'success'},
-        {content: 'Học sinh TB > 8', id: 'pro'},
-    ];
-    const itemSelected = req.params.id;
-    let data;
-    if (itemSelected == 'failed') {
-        data = await teachersModel.getStudentsFailed(req.session.username);
-    } else if (itemSelected == 'success') {
-        data = await teachersModel.getStudentsSuccess(req.session.username);
-    } else data = await teachersModel.getStudentsPro(req.session.username);
-
-    res.render('teachers/statistic', {
-        title: title,
-        data: data,
-    })
+    if (!(await teacherExist(req.session.username))) res.redirect('/logout');
+    else {
+        const title = [
+            {content: 'Học sinh trượt', id: 'failed'},
+            {content: 'Học sinh qua môn', id: 'success'},
+            {content: 'Học sinh TB > 8', id: 'pro'},
+        ];
+        const itemSelected = req.params.id;
+        let data;
+        if (itemSelected == 'failed') {
+            data = await studentsModel.getStudentsFailed(req.session.username);
+        } else if (itemSelected == 'success') {
+            data = await studentsModel.getStudentsSuccess(req.session.username);
+        } else data = await studentsModule.getStudentsPro(req.session.username);
+    
+        res.render('teachers/statistic', {
+            title: title,
+            data: data,
+        })
+    }
 })
 
 module.exports = router;
