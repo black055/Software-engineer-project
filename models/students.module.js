@@ -176,7 +176,7 @@ module.exports = {
         return db.query(`UPDATE ${TABLE_ACCOUNT_STUDENT} SET MAT_KHAU = '${passHashed}' WHERE ID_HOC_SINH = '${idStudent}'`);
     },
 
-    getStudentsFailed () {
+    adminGetStudentsFailed () {
         return db.query(`SELECT BANG_DIEM.ID_HOC_SINH, HO_TEN, DIEM_TK, TEN_HP
         FROM HOC_SINH, BANG_DIEM, LOP_HOC, HOC_PHAN
         WHERE HOC_SINH.ID_HOC_SINH = BANG_DIEM.ID_HOC_SINH
@@ -185,7 +185,7 @@ module.exports = {
         AND BANG_DIEM.DIEM_TK < 5`);
     },
 
-    getStudentsSuccess () {
+    adminGetStudentsSuccess () {
         return db.query(`SELECT BANG_DIEM.ID_HOC_SINH, HO_TEN, DIEM_TK, TEN_HP
         FROM HOC_SINH, BANG_DIEM, LOP_HOC, HOC_PHAN
         WHERE HOC_SINH.ID_HOC_SINH = BANG_DIEM.ID_HOC_SINH
@@ -194,7 +194,7 @@ module.exports = {
         AND BANG_DIEM.DIEM_TK > 5`);
     },
 
-    getStudentsPro () {
+    adminGetStudentsPro () {
         return db.query(`SELECT BANG_DIEM.ID_HOC_SINH, HO_TEN, DIEM_TK, TEN_HP
         FROM HOC_SINH, BANG_DIEM, LOP_HOC, HOC_PHAN
         WHERE HOC_SINH.ID_HOC_SINH = BANG_DIEM.ID_HOC_SINH

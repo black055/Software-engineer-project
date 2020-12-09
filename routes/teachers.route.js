@@ -141,11 +141,12 @@ router.get('/statistic/:id', async (req, res) => {
             data = await studentsModel.getStudentsFailed(req.session.username);
         } else if (itemSelected == 'success') {
             data = await studentsModel.getStudentsSuccess(req.session.username);
-        } else data = await studentsModule.getStudentsPro(req.session.username);
+        } else if (itemSelected == 'pro') data = await studentsModule.getStudentsPro(req.session.username);
     
         res.render('teachers/statistic', {
             title: title,
             data: data,
+            itemSelected: itemSelected,
         })
     }
 })

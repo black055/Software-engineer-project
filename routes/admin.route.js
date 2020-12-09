@@ -124,15 +124,17 @@ router.get('/statistic/:id', async (req, res) => {
         {content: 'Học sinh TB > 8', id: 'pro'},
     ];
     const itemSelected = req.params.id;
-    let data;
+    let data = null;
     if (itemSelected == 'failed') {
-        data = await studentsModule.getStudentsFailed();
+        data = await studentsModule.adminGetStudentsFailed();
     } else if (itemSelected == 'success') {
-        data = await studentsModule.getStudentsSuccess();
-    } else data = await studentsModule.getStudentsPro();
+        data = await studentsModule.adminGetStudentsSuccess();
+    } else if (itemSelected == 'pro') data = await studentsModule.adminGetStudentsPro();
+
     res.render('admin/statisticStudent', {
         title: title,
         data: data,
+        itemSelected: itemSelected,
     })
 })
 

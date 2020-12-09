@@ -199,8 +199,10 @@ $('#canleEdit').click(function () {
 
 $('#name').keyup(function () {
   if (!$(this).val()) {
-    $(this).addClass('is-invalid');
-    $('#divName').append(`<div class="invalid-feedback">Tên chưa hợp lệ.</div>`);
+    if ($('#divName').children().length < 3) {
+      $(this).addClass('is-invalid');
+      $('#divName').append(`<div class="invalid-feedback">Tên chưa hợp lệ.</div>`);
+    }
     $('#updateInfo').prop('disabled', true);
   } else {
     $(this).removeClass('is-invalid');
@@ -210,8 +212,10 @@ $('#name').keyup(function () {
 
 $('#sdt').keyup(function () {
   if (!$(this).val()) {
-    $(this).addClass('is-invalid');
-    $('#divSDT').append(`<div class="invalid-feedback">Số điện thoại không hợp lệ</div>`);
+    if ($('#divSDT').children().length < 3) {
+      $(this).addClass('is-invalid');
+      $('#divSDT').append(`<div class="invalid-feedback">Số điện thoại không hợp lệ</div>`);
+    }
     $('#updateInfo').prop('disabled', true);
   } else {
     $(this).removeClass('is-invalid');
