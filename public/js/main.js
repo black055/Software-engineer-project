@@ -125,10 +125,22 @@ $(".enroll-cb").click(function () {
 
 $("#btn-enroll").click(async function () {
   if ($(".enroll-cb:checked", $("#mytable").dataTable().fnGetNodes()).length) {
-    await $(".enroll-cb:checked", $("#mytable").dataTable().fnGetNodes()).each(function () {
-      $("#enroll-form").append(`<input type="hidden" name="classes" value="${$(this).data('idclass')}" />`);
+    Swal.fire({
+      title: 'Đồng ý đăng ký?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Đăng ký',
+      cancelButtonText: 'Hủy'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await $(".enroll-cb:checked", $("#mytable").dataTable().fnGetNodes()).each(function () {
+          $("#enroll-form").append(`<input type="hidden" name="classes" value="${$(this).data('idclass')}" />`);
+        })
+        $("#enroll-form").submit();
+      }
     })
-    $("#enroll-form").submit();
   }
   else {
     Swal.fire({
@@ -147,7 +159,8 @@ $('.btn-unenroll').click(function () {
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: 'Xóa!'
+    confirmButtonText: 'Xóa!',
+    cancelButtonText: 'Hủy'
   }).then(async (result) => {
     if (result.isConfirmed) {
       await $("#unenroll-form").append(`<input type="hidden" name="classEnrolled" value="${$(this).data('idclass')}" />`);

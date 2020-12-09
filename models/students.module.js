@@ -129,8 +129,8 @@ module.exports = {
                         if (typeof classes == 'string') classes = [classes];
                         classes.forEach(function (e) {
                             db.query(`INSERT INTO BANG_DIEM (ID_HOC_SINH,ID_LOP_HOC,DIEM_GK,DIEM_CK,DIEM_TK) VALUES ('${idStudent}','${e}',0,0,0)`)
-                            resolve(true);
                         })
+                        resolve(true);
                     } else {
                         resolve(false);
                     };
@@ -176,7 +176,7 @@ module.exports = {
         return db.query(`UPDATE ${TABLE_ACCOUNT_STUDENT} SET MAT_KHAU = '${passHashed}' WHERE ID_HOC_SINH = '${idStudent}'`);
     },
 
-    adminGetStudentsFailed () {
+    adminGetStudentsFailed() {
         return db.query(`SELECT BANG_DIEM.ID_HOC_SINH, HO_TEN, DIEM_TK, TEN_HP
         FROM HOC_SINH, BANG_DIEM, LOP_HOC, HOC_PHAN
         WHERE HOC_SINH.ID_HOC_SINH = BANG_DIEM.ID_HOC_SINH
@@ -185,7 +185,7 @@ module.exports = {
         AND BANG_DIEM.DIEM_TK < 5`);
     },
 
-    adminGetStudentsSuccess () {
+    adminGetStudentsSuccess() {
         return db.query(`SELECT BANG_DIEM.ID_HOC_SINH, HO_TEN, DIEM_TK, TEN_HP
         FROM HOC_SINH, BANG_DIEM, LOP_HOC, HOC_PHAN
         WHERE HOC_SINH.ID_HOC_SINH = BANG_DIEM.ID_HOC_SINH
@@ -194,7 +194,7 @@ module.exports = {
         AND BANG_DIEM.DIEM_TK > 5`);
     },
 
-    adminGetStudentsPro () {
+    adminGetStudentsPro() {
         return db.query(`SELECT BANG_DIEM.ID_HOC_SINH, HO_TEN, DIEM_TK, TEN_HP
         FROM HOC_SINH, BANG_DIEM, LOP_HOC, HOC_PHAN
         WHERE HOC_SINH.ID_HOC_SINH = BANG_DIEM.ID_HOC_SINH
@@ -203,7 +203,7 @@ module.exports = {
         AND BANG_DIEM.DIEM_TK >= 8`);
     },
 
-    getInfoStudent (idStudent) {
+    getInfoStudent(idStudent) {
         return db.query(`SELECT * FROM HOC_SINH WHERE ID_HOC_SINH = '${idStudent}'`)
     },
 
@@ -216,7 +216,7 @@ module.exports = {
         AND LOP_HOC.ID_LOP_HOC = '${id_class}'`);
     },
 
-    getStudentsFailed (id_gv) {
+    getStudentsFailed(id_gv) {
         return db.query(`SELECT BANG_DIEM.ID_HOC_SINH, HO_TEN, DIEM_TK, TEN_HP
         FROM HOC_SINH, BANG_DIEM, LOP_HOC, HOC_PHAN
         WHERE HOC_SINH.ID_HOC_SINH = BANG_DIEM.ID_HOC_SINH
@@ -226,7 +226,7 @@ module.exports = {
         AND BANG_DIEM.DIEM_TK < 5`);
     },
 
-    getStudentsSuccess (id_gv) {
+    getStudentsSuccess(id_gv) {
         return db.query(`SELECT BANG_DIEM.ID_HOC_SINH, HO_TEN, DIEM_TK, TEN_HP
         FROM HOC_SINH, BANG_DIEM, LOP_HOC, HOC_PHAN
         WHERE HOC_SINH.ID_HOC_SINH = BANG_DIEM.ID_HOC_SINH
@@ -236,7 +236,7 @@ module.exports = {
         AND BANG_DIEM.DIEM_TK > 5`);
     },
 
-    getStudentsPro (id_gv) {
+    getStudentsPro(id_gv) {
         return db.query(`SELECT BANG_DIEM.ID_HOC_SINH, HO_TEN, DIEM_TK, TEN_HP
         FROM HOC_SINH, BANG_DIEM, LOP_HOC, HOC_PHAN
         WHERE HOC_SINH.ID_HOC_SINH = BANG_DIEM.ID_HOC_SINH

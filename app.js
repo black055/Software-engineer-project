@@ -6,9 +6,10 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const middlewares = require('./middlewares/login.mdw');
+require('express-async-errors');
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Config view engine
@@ -19,7 +20,7 @@ app.engine('hbs', hbs({
     defaultLayout: 'main.hbs',
     helpers: {
         // Tính toán cơ bản
-        inc: function(number) {
+        inc: function (number) {
             return number + 1;
         },
     }
@@ -33,11 +34,11 @@ handlebars.handlebars.registerHelper({
 
 // Session 
 app.use(session({
-    secret: 'secret', 
-    resave: false, 
+    secret: 'secret',
+    resave: false,
     saveUninitialized: false,
     cookie: {
-        expires: 1000*60*60*24,
+        expires: 1000 * 60 * 60 * 24,
     },
 }));
 
@@ -61,9 +62,31 @@ app.use('/teachers', middlewares.mdwLogin, middlewares.mdwTeacher, require('./ro
 app.use('/login', require('./routes/login.route.js'));
 app.use('/logout', require('./routes/logout.route.js'));
 
+app.use((req, res, next) => {
+    next({
+        status: 404,
+        message: 'Not Found',
+    });
+});
+
+app.use((err, req, res, next) => {
+    if (err.status === 404) {
+        return res.status(404).render('404', {
+            layout: false,
+        });
+    }
+
+    if (err.status === 500) {
+        return res.status(500).render('500', {
+            layout: false
+        });
+    }
+    next();
+});
+
 
 // Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`App is running at http://localhost:${PORT}`); 
+    console.log(`App is running at http://localhost:${PORT}`);
 });
