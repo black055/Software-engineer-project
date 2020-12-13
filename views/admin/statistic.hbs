@@ -1,0 +1,55 @@
+<h2>Thống kê</h2>
+<div class="col-md-3" style="margin-bottom: 10px;">
+    <select class="form-control" id="admin_statistic">
+        <option>Chọn đối tượng cần thống kê</option>
+        {{#each title}}
+        {{#if (eq id ../itemSelected)}}
+        <option value={{id}} selected>{{content}}</option>
+        {{else}}
+        <option value={{id}}>{{content}}</option>
+        {{/if}}
+        {{/each}}
+    </select>
+</div>
+
+{{#if failed}}
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script>
+    window.onload = function () {
+
+        var chart = new CanvasJS.Chart("chartContainer", {
+            exportEnabled: true,
+            animationEnabled: true,
+            title: {
+                text: "Tỉ lệ qua/rớt môn học của sinh viên"
+            },
+            legend: {
+                cursor: "pointer",
+                itemclick: explodePie
+            },
+            data: [{
+                type: "pie",
+                showInLegend: true,
+                toolTipContent: "{name}: <strong>{y}%</strong>",
+                indexLabel: "{name} - {y}%",
+                dataPoints: [
+                    { y: {{failed}}, name: "Rớt môn"},
+                    { y: {{success}}, name: "Qua môn" },
+                ]
+            }]
+        });
+        chart.render();
+    }
+
+    function explodePie(e) {
+        if (typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+            e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+        } else {
+            e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+        }
+        e.chart.render();
+
+    }
+</script>
+{{/if}}

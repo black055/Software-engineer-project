@@ -109,33 +109,31 @@ router.post('/coursesManage/edit', async (req, res) => {
 })
 
 router.get('/statistic', async (req, res) => {
-    const title = [
-        {content: 'Học sinh trượt', id: 'failed'},
-        {content: 'Học sinh qua môn', id: 'success'},
-        {content: 'Học sinh TB > 8', id: 'pro'},
-    ];
-    res.render('admin/statisticStudent', {title: title,});
+    const statistic = [
+        {content: 'Thống kê về Học sinh', id: 'student'},
+        {content: 'Thống kê về Giáo viên', id: 'teacher'},
+        {content: 'Thống kê về Lớp học', id: 'classes'},
+    ]
+    res.render('admin/statistic', {title: statistic,});
 })
 
-router.get('/statistic/:id', async (req, res) => {
-    const title = [
-        {content: 'Học sinh trượt', id: 'failed'},
-        {content: 'Học sinh qua môn', id: 'success'},
-        {content: 'Học sinh TB > 8', id: 'pro'},
+router.get('/statistic/student', async (req, res) => {
+    const statistic = [
+        {content: 'Thống kê về Học sinh', id: 'student'},
+        {content: 'Thống kê về Giáo viên', id: 'teacher'},
+        {content: 'Thống kê về Lớp học', id: 'classes'},
     ];
-    const itemSelected = req.params.id;
-    let data = null;
-    if (itemSelected == 'failed') {
-        data = await studentsModule.adminGetStudentsFailed();
-    } else if (itemSelected == 'success') {
-        data = await studentsModule.adminGetStudentsSuccess();
-    } else if (itemSelected == 'pro') data = await studentsModule.adminGetStudentsPro();
 
-    res.render('admin/statisticStudent', {
-        title: title,
-        data: data,
-        itemSelected: itemSelected,
-    })
+    const studentFailed = await studentsModule.adminGetStudentsFailed();
+    const studentSuccess = await studentsModule.adminGetStudentsSuccess();
+    const percentFailed = (studentFailed.length / (studentSuccess.length + studentFailed.length)) * 100;
+    const percentSuccess = 100 - percentFailed;
+    res.render('admin/statistic', {
+        title: statistic,
+        itemSelected: 'student',
+        failed: percentFailed,
+        success: percentSuccess,
+    });
 })
 
 module.exports = router;
