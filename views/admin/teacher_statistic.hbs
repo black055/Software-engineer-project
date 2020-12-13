@@ -12,7 +12,7 @@
     </select>
 </div>
 
-{{#if failed}}
+{{#if _male}}
 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
@@ -22,7 +22,7 @@
             exportEnabled: true,
             animationEnabled: true,
             title: {
-                text: "Tỉ lệ qua/rớt môn học của sinh viên",
+                text: "Tỉ lệ nam/nữ của giáo viên",
                 fontFamily: "Segoe UI",
             },
             legend: {
@@ -32,11 +32,12 @@
             data: [{
                 type: "pie",
                 showInLegend: true,
+                yValueFormatString: "##0.0000\"%\"",
                 toolTipContent: "{name}: <strong>{y}%</strong>",
-                indexLabel: "{name} - {y}%",
+                indexLabel: "{name} - {y}",
                 dataPoints: [
-                    { y: {{failed}}, name: "Rớt môn"},
-                    { y: {{success}}, name: "Qua môn" },
+                    { y: {{_male}}, name: "Nam" },
+                    { y: {{_female}}, name: "Nữ" },
                 ]
             }]
         });

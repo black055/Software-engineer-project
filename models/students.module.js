@@ -120,16 +120,16 @@ module.exports = {
     enrollSubject(idStudent, classes) {
         return new Promise(function (resolve, reject) {
             db.query(`SELECT * FROM ${TABLE_ACCOUNT_STUDENT} WHERE ID_HOC_SINH = ?`
-                , [idStudent], (error, results, fields) => {
+                , [idStudent], async (error, results, fields) => {
                     if (error) {
                         console.log(error);
                     }
 
                     if (results.length) {
                         if (typeof classes == 'string') classes = [classes];
-                        classes.forEach(function (e) {
-                            db.query(`INSERT INTO BANG_DIEM (ID_HOC_SINH,ID_LOP_HOC,DIEM_GK,DIEM_CK,DIEM_TK) VALUES ('${idStudent}','${e}',0,0,0)`)
-                        })
+                        for (const _class of classes) {
+                            await db.query(`INSERT INTO BANG_DIEM (ID_HOC_SINH,ID_LOP_HOC,DIEM_GK,DIEM_CK,DIEM_TK) VALUES ('${idStudent}','${_class}',0,0,0)`)
+                        }
                         resolve(true);
                     } else {
                         resolve(false);
@@ -158,8 +158,7 @@ module.exports = {
                     if (results.length) {
                         if (typeof idclass == 'string') {
                             db.query(`DELETE FROM BANG_DIEM 
-                            WHERE ID_HOC_SINH = '${idStudent}' AND ID_LOP_HOC = '${idclass}'`)
-                            resolve(true);
+                            WHERE ID_HOC_SINH = '${idStudent}' AND ID_LOP_HOC = '${idclass}'`).then(() => resolve(true))
                         }
                     } else {
                         resolve(false);

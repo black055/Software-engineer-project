@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const middlewares = require('./middlewares/login.mdw');
 require('express-async-errors');
+const hbs_sections = require('express-handlebars-sections');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,6 +20,7 @@ app.engine('hbs', hbs({
     layoutsDir: path.join(__dirname, 'views/layouts'),
     defaultLayout: 'main.hbs',
     helpers: {
+        section: hbs_sections(),
         // Tính toán cơ bản
         inc: function (number) {
             return number + 1;

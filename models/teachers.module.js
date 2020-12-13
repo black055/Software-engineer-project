@@ -131,5 +131,17 @@ module.exports = {
 
     updateTeacherPassword (id, password) {
         return db.query(`UPDATE ACCOUNT_GIAO_VIEN SET MAT_KHAU = '${password}' WHERE ID_GIAO_VIEN = '${id}'`);
+    },
+
+    adminGetteachersMale() {
+        return db.query(`SELECT *
+        FROM CNPM.GIAO_VIEN
+        WHERE GIAO_VIEN.GIOI_TINH = 'Nam'`);
+    },
+
+    adminGetteachersFemale() {
+        return db.query(`SELECT *
+        FROM CNPM.GIAO_VIEN
+        WHERE GIAO_VIEN.GIOI_TINH = 'Nữ'`);
     }
 }

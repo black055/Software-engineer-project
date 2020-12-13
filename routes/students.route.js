@@ -44,6 +44,7 @@ router.get('/scoreTable', async (req, res) => {
     }
 });
 
+//Học sinh đăng ký học phần
 router.get('/enroll', async (req, res) => {
     if (!(await studentExist(req.session.username))) res.redirect('/logout');
     else {
@@ -57,9 +58,10 @@ router.get('/enroll', async (req, res) => {
 
 router.post('/enroll_classes', async (req, res) => {
     await studentsModel.enrollSubject(req.session.username, req.body.classes);
-    res.redirect(`/students/info`);
+    res.redirect(`/students/enroll`);
 })
 
+//Học sinh hủy đăng ký học phần
 router.get('/unenroll', async (req, res) => {
     if (!(await studentExist(req.session.username))) res.redirect('/logout');
     else {
@@ -73,7 +75,7 @@ router.get('/unenroll', async (req, res) => {
 
 router.post('/unenroll_class', async (req, res) => {
     await studentsModel.unenrollSubject(req.session.username, req.body.classEnrolled);
-    res.redirect(`/students/info`);
+    res.redirect(`/students/unenroll`);
 })
 
 router.get('/password', async (req, res) => {
