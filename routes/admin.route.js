@@ -108,48 +108,23 @@ router.post('/coursesManage/edit', async (req, res) => {
     res.redirect('/admin/coursesManage');
 })
 
-router.get('/statistic', async (req, res) => {
-    const statistic = [
-        {content: 'Thống kê về Học sinh', id: 'student'},
-        {content: 'Thống kê về Giáo viên', id: 'teacher'},
-        {content: 'Thống kê về Lớp học', id: 'classes'},
-    ]
-    res.render('admin/statistic', {title: statistic,});
-})
-
 router.get('/statistic/student', async (req, res) => {
-    const statistic = [
-        {content: 'Thống kê về Học sinh', id: 'student'},
-        {content: 'Thống kê về Giáo viên', id: 'teacher'},
-        {content: 'Thống kê về Lớp học', id: 'classes'},
-    ];
-
     const studentFailed = await studentsModule.adminGetStudentsFailed();
     const studentSuccess = await studentsModule.adminGetStudentsSuccess();
     const percentFailed = (studentFailed.length / (studentSuccess.length + studentFailed.length)) * 100;
     const percentSuccess = 100 - percentFailed;
     res.render('admin/statistic', {
-        title: statistic,
-        itemSelected: 'student',
         failed: percentFailed,
         success: percentSuccess,
     });
 })
 
 router.get('/statistic/teacher', async (req, res) => {
-    const statistic = [
-        {content: 'Thống kê về Học sinh', id: 'student'},
-        {content: 'Thống kê về Giáo viên', id: 'teacher'},
-        {content: 'Thống kê về Lớp học', id: 'classes'},
-    ];
-    
     const teacherMale = await teachersModule.adminGetteachersMale();
     const teacherFemale = await teachersModule.adminGetteachersFemale();
     const percentMale = (teacherMale.length / (teacherFemale.length + teacherMale.length)) * 100;
     const percentFemale = 100 - percentMale;
     res.render('admin/teacher_statistic', {
-        title: statistic,
-        itemSelected: 'teacher',
         _male: percentMale,
         _female: percentFemale,
     });

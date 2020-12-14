@@ -135,13 +135,13 @@ module.exports = {
 
     adminGetteachersMale() {
         return db.query(`SELECT *
-        FROM CNPM.GIAO_VIEN
+        FROM GIAO_VIEN
         WHERE GIAO_VIEN.GIOI_TINH = 'Nam'`);
     },
 
     adminGetteachersFemale() {
         return db.query(`SELECT *
-        FROM CNPM.GIAO_VIEN
+        FROM GIAO_VIEN
         WHERE GIAO_VIEN.GIOI_TINH = 'Nữ'`);
     }
 }
