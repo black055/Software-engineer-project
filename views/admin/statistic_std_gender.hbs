@@ -1,4 +1,4 @@
-{{#if failed}}
+{{#if _male}}
 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
@@ -8,7 +8,7 @@
             exportEnabled: true,
             animationEnabled: true,
             title: {
-                text: "Tỉ lệ đậu/rớt môn học của học sinh",
+                text: "Tỉ lệ học sinh nam/nữ",
                 fontFamily: "Segoe UI",
             },
             legend: {
@@ -18,12 +18,11 @@
             data: [{
                 type: "pie",
                 showInLegend: true,
-                toolTipContent: "{name}: <strong>#percent %</strong>",
+                toolTipContent: "{name}: <strong>{y} - #percent %</strong>",
                 indexLabel: "{name} - #percent%",
                 dataPoints: [
-                    { y: {{ failed }}, name: "Rớt môn"},
-                    { y: {{ success }}, name: "Qua môn điểm TK < 8" },
-                    { y: {{ pro }}, name: "Điểm TK > 8" },
+                    { y: {{_male}}, name: "Học sinh nam"},
+                    { y: {{_female}}, name: "Học sinh nữ" },
                 ]
             }]
         });

@@ -54,7 +54,7 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
 // Static resources
-app.use('/public', express.static(path.join(__dirname, '/public')));
+app.use(express.static(__dirname + '/public'));
 
 // Routes
 app.use('/', require('./routes/login.route.js'));

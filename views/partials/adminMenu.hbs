@@ -10,7 +10,15 @@
                 <a href="/admin/statistic/teacher"><i class="fas fa-user" style="margin-right: 8px;"></i>Thống kê giáo viên</a>
             </li>
             <li>
-                <a href="/admin/statistic/student"><i class="fas fa-user-graduate" style="margin-right: 8px;"></i>Thống kê học sinh</a>
+                <a href="#studentSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-user-graduate" style="margin-right: 8px;"></i>Thống kê học sinh</a>
+                <ul class="collapse list-unstyled" id="studentSubmenu">
+                    <li>
+                        <a href="/admin/statistic/student">Tỉ lệ học sinh đậu, rớt</a>
+                    </li>
+                    <li>
+                        <a href="/admin/statistic/student/gender">Tỉ lệ học sinh nam, nữ</a>
+                    </li>
+                </ul>
             </li>
             <li>
                 <a href="#"><i class="fas fa-home" style="margin-right: 8px;"></i>Thống kê lớp học</a>
@@ -18,7 +26,3 @@
         </ul>
     </li>
 </ul>
-
-{{#section 'js'}}
-<script src="../../public/js/admin.js"></script>
-{{/section}}

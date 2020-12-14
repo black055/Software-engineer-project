@@ -111,11 +111,22 @@ router.post('/coursesManage/edit', async (req, res) => {
 router.get('/statistic/student', async (req, res) => {
     const studentFailed = await studentsModule.adminGetStudentsFailed();
     const studentSuccess = await studentsModule.adminGetStudentsSuccess();
-    const percentFailed = (studentFailed.length / (studentSuccess.length + studentFailed.length)) * 100;
-    const percentSuccess = 100 - percentFailed;
+    const studentPro = await studentsModule.adminGetStudentsPro();
+
     res.render('admin/statistic', {
-        failed: percentFailed,
-        success: percentSuccess,
+        failed: studentFailed.length,
+        success: studentSuccess.length - studentPro.length,
+        pro: studentPro.length,
+    });
+})
+
+router.get('/statistic/student/gender', async (req, res) => {
+    const male = await studentsModule.getMale();
+    const female = await studentsModule.getFemale();
+    console.log(male.length, female.length);
+    res.render('admin/statistic_std_gender', {
+        _male: male.length,
+        _female: female.length,
     });
 })
 

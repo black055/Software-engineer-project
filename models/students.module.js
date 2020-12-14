@@ -245,4 +245,11 @@ module.exports = {
         AND BANG_DIEM.DIEM_TK >= 8`);
     },
 
+    getMale() {
+        return db.query(`SELECT * FROM HOC_SINH WHERE GIOI_TINH = 'Nam'`);
+    },
+
+    getFemale() {
+        return db.query(`SELECT * FROM HOC_SINH WHERE GIOI_TINH = 'Nữ'`);
+    }
 }
