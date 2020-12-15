@@ -141,4 +141,49 @@ router.get('/statistic/teacher', async (req, res) => {
     });
 })
 
+router.get('/statistic/class/pass', async (req, res) => {
+    const classList = await classesModule.getAll();
+    res.render('admin/class_statistic', {
+        classList: classList
+    });
+})
+
+router.get('/statistic/class/pass/:id', async (req, res) => {
+    const itemSelected = req.params.id;
+    const classList = await classesModule.getAll();
+    const studentFailed = await studentsModule.getStudentsFailedByClass(itemSelected);
+    const studentPassed = await studentsModule.getStudentsPassedByClass(itemSelected);
+    if (studentPassed.length == 0 && studentFailed.length == 0) {
+        res.render('admin/class_statistic', {
+            classList: classList,
+            itemSelected: itemSelected,
+            emptyClass: 'true'
+        });
+    } else {
+        res.render('admin/class_statistic', {
+            classList: classList,
+            itemSelected: itemSelected,
+            passed: studentPassed.length,
+            failed: studentFailed.length
+        });
+    }
+})
+
+router.get('/statistic/class/byDay/:id', async (req, res) => {
+    /* 
+    const classList = await classesModule.getClassesByDay(selectedDay);
+    console.log(classList);
+    console.log(selectedDay);
+    res.render('admin/class_by_day', {
+        classList: classList,
+    });*/
+    const selectedDay = req.params.id;
+    const classList = await classesModule.getClassesByDay(selectedDay);
+    console.log(classList);
+    res.render('admin/class_by_day', {
+        classList: classList,
+        selectedDay: selectedDay
+    });
+})
+
 module.exports = router;

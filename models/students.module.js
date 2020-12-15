@@ -190,7 +190,7 @@ module.exports = {
         WHERE HOC_SINH.ID_HOC_SINH = BANG_DIEM.ID_HOC_SINH
         AND BANG_DIEM.ID_LOP_HOC = LOP_HOC.ID_LOP_HOC
         AND HOC_PHAN.MA_HP = LOP_HOC.MA_HP
-        AND BANG_DIEM.DIEM_TK > 5`);
+        AND BANG_DIEM.DIEM_TK >= 5`);
     },
 
     adminGetStudentsPro() {
@@ -232,7 +232,7 @@ module.exports = {
         AND BANG_DIEM.ID_LOP_HOC = LOP_HOC.ID_LOP_HOC
         AND HOC_PHAN.MA_HP = LOP_HOC.MA_HP
         AND LOP_HOC.ID_GIAO_VIEN = '${id_gv}'
-        AND BANG_DIEM.DIEM_TK > 5`);
+        AND BANG_DIEM.DIEM_TK >= 5`);
     },
 
     getStudentsPro(id_gv) {
@@ -251,5 +251,21 @@ module.exports = {
 
     getFemale() {
         return db.query(`SELECT * FROM HOC_SINH WHERE GIOI_TINH = 'Nữ'`);
+    },
+
+    getStudentsFailedByClass(classID) {
+        return db.query(`SELECT BANG_DIEM.ID_HOC_SINH, HO_TEN, DIEM_TK
+        FROM HOC_SINH, BANG_DIEM
+        WHERE HOC_SINH.ID_HOC_SINH = BANG_DIEM.ID_HOC_SINH
+        AND BANG_DIEM.ID_LOP_HOC = '${classID}'
+        AND BANG_DIEM.DIEM_TK < 5`);
+    },
+
+    getStudentsPassedByClass(classID) {
+        return db.query(`SELECT BANG_DIEM.ID_HOC_SINH, HO_TEN, DIEM_TK
+        FROM HOC_SINH, BANG_DIEM
+        WHERE HOC_SINH.ID_HOC_SINH = BANG_DIEM.ID_HOC_SINH
+        AND BANG_DIEM.ID_LOP_HOC = '${classID}'
+        AND BANG_DIEM.DIEM_TK >= 5`);
     }
 }

@@ -1,0 +1,49 @@
+<h2>Thống kê tỉ lệ đậu/rớt của lớp học</h2>
+
+<div class="col-md-3" style="margin-bottom: 10px;">
+    <select class="form-control" id="classByDayStatistic">
+        <option>Ngày cần thống kê</option>
+        <option value="2">Thứ 2</option>
+        <option value="3">Thứ 3</option>
+        <option value="4">Thứ 4</option>
+        <option value="5">Thứ 5</option>
+        <option value="6">Thứ 6</option>
+        <option value="7">Thứ 7</option>
+    </select>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table id="mytable" class="table table-bordred table-striped">
+                    <thead>
+                        <tr>
+                            <th>Mã môn học</th>
+                            <th>Tên môn học</th>
+                            <th>Lớp</th>
+                            <th>Phòng</th>
+                            <th>Tiết học</th>
+                            <th>Giáo viên</th>
+                            <th>Ngày bắt đầu</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {{#each classList}}
+                        <tr>
+                            <td>{{ID_LOP_HOC}}</td>
+                            <td>{{TEN_HP}}</td>
+                            <td>{{TEN_LOP}}</td>
+                            <td>{{PHONG_HOC}}</td>
+                            <td>{{TIET_BAT_DAU}} - {{TIET_KET_THUC}}</td>
+                            <td>{{HO_TEN}}</td>
+                            <td>{{NGAY_BAT_DAU}}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

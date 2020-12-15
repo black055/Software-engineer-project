@@ -1,0 +1,67 @@
+<h2>Thống kê tỉ lệ đậu/rớt của lớp học</h2>
+<div class="col-md-3" style="margin-bottom: 10px;">
+    <select class="form-control" id="classStatistic">
+        <option>Chọn lớp học</option>
+        {{#each classList}}
+        {{#if (eq ID_LOP_HOC ../itemSelected)}}
+        <option value={{ID_LOP_HOC}} selected>{{ID_LOP_HOC}} - {{TEN_HP}}</option>
+        {{else}}
+        <option value={{ID_LOP_HOC}}>{{ID_LOP_HOC}} - {{TEN_HP}}</option>
+        {{/if}}
+        {{/each}}
+    </select>
+</div>
+
+{{#if passed}}
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script>
+    window.onload = function () {
+
+        var chart = new CanvasJS.Chart("chartContainer", {
+            exportEnabled: true,
+            animationEnabled: true,
+            title: {
+                text: "Tỉ lệ đậu/rớt của lớp học",
+                fontFamily: "Segoe UI",
+            },
+            legend: {
+                cursor: "pointer",
+                itemclick: explodePie
+            },
+            data: [{
+                type: "pie",
+                showInLegend: true,
+                toolTipContent: "{name}: <strong>{y} - #percent %</strong>",
+                indexLabel: "{name} - #percent%",
+                dataPoints: [
+                    { y: {{passed}}, name: "Qua môn" },
+                    { y: {{failed}}, name: "Rớt môn" },
+                ]
+            }]
+        });
+        chart.render();
+    }
+
+    function explodePie(e) {
+        if (typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+            e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+        } else {
+            e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+        }
+        e.chart.render();
+
+    }
+</script>
+{{/if}}
+
+{{#if emptyClass}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Rất tiếc...',
+                text: 'Chưa có sinh viên nào đăng ký lớp học đã chọn!'
+            });
+        </script>
+{{/if}}

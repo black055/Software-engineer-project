@@ -73,5 +73,12 @@ module.exports = {
                 };
             });
         });
+    },
+
+    getClassesByDay(selectedDay) {
+        return db.query(`SELECT LH.ID_LOP_HOC, HP.TEN_HP, LH.TEN_LOP, LH.PHONG_HOC, LH.LICH_HOC, LH.TIET_BAT_DAU, LH.TIET_KET_THUC, LH.NGAY_BAT_DAU, GV.HO_TEN, LH.PHONG_HOC, GV.ID_GIAO_VIEN, HP.MA_HP
+                         FROM ${TABLE_CLASSES} LH, ${TABLE_COURSES} HP, GIAO_VIEN GV
+                         WHERE LH.MA_HP = HP.MA_HP AND LH.ID_GIAO_VIEN = GV.ID_GIAO_VIEN AND LICH_HOC = ${selectedDay}`);
     }
+
 }

@@ -98,16 +98,16 @@ $('#statistic').on('change', function (e) {
   e.stopPropagation();
   window.location = `/teachers/statistic/${e.currentTarget.value}`;
 });
-
-$('#admin_statistic').on('change', function (e) {
+$('#classStatistic').on('change', function (e) {
   e.preventDefault();
   e.stopPropagation();
-  if (e.currentTarget.value == 'student' ||
-    e.currentTarget.value == 'teacher' ||
-    e.currentTarget.value == 'classes')
-    window.location = `/admin/statistic/${e.currentTarget.value}`;
-})
-
+  window.location = `/admin/statistic/class/pass/${e.currentTarget.value}`;
+});
+$('#classByDayStatistic').on('change', function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+  window.location = `/admin/statistic/class/byDay/${e.currentTarget.value}`;
+});
 
 
 // Edit information teachers
