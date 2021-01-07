@@ -10,42 +10,42 @@ const courseInfo1 = {
 const courseInfo2 = {
     id: "CSC10007a",
     name: "Hệ điều hành 1",
-}
+};
 
 describe("getAllCourse", () => {
-    it("", async () => {
+    it("", () => {
         let query = `SELECT * FROM HOC_PHAN`;
-        var result1;
+        let result1;
         db.query(query, (err, result) => {
             if (err) throw err;
             result1 = result.length;
         });
-        let result2 = await coursesModule.getAll().length;
-        // ASSERT
-        expect(result1).to.be.equal(result2);
+        return coursesModule.getAll().then((result2) => {
+            expect(result1).to.be.equal(result2.length);
+        });
     });
 });
 
 describe("addCourse", () => {
-    it("Da ton tai khoa hoc", async () => {
-        let result = await coursesModule.addCourse(courseInfo1);
-        // ASSERT
-        expect(result).to.be.false;
+    it("Da ton tai khoa hoc", () => {
+        return coursesModule.addCourse(courseInfo1).then((result) => {
+            expect(result).to.be.false;
+        });
     });
 });
 
 describe("deleteCourse", () => {
-    it("Khoa hoc khong ton tai", async () => {
-        let result = await coursesModule.deleteCourse(courseInfo2);
-        // ASSERT
-        expect(result).to.be.false;
+    it("Khoa hoc khong ton tai", () => {
+        return coursesModule.deleteCourse(courseInfo2).then((result) => {
+            expect(result).to.be.false;
+        });
     });
 });
 
 describe("editCourse", () => {
-    it("Khoa hoc khong ton tai", async () => {
-        let result = await coursesModule.editCourse(courseInfo2);
-        // ASSERT
-        expect(result).to.be.false;
+    it("Khoa hoc khong ton tai", () => {
+        return coursesModule.editCourse(courseInfo2).then((result) => {
+            expect(result).to.be.false;
+        });
     });
 });
