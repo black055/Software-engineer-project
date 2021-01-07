@@ -13,13 +13,10 @@ const courseInfo2 = {
 };
 
 describe("getAllCourse", () => {
-    it("", () => {
+    it("", async () => {
         let query = `SELECT * FROM HOC_PHAN`;
-        let result1;
-        db.query(query, (err, result) => {
-            if (err) throw err;
-            result1 = result.length;
-        });
+        let result = await db.query(query);
+        let result1 = result.length;
         return coursesModule.getAll().then((result2) => {
             expect(result1).to.be.equal(result2.length);
         });
