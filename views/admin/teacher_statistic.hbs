@@ -1,5 +1,7 @@
 {{#if _male}}
-<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<h2>Tỉ lệ nam/nữ của giáo viên</h2>
+<div id="chartContainer" style="height: 370px; width: 100%;background-color: transparent;">
+</div>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
     window.onload = function () {
@@ -7,10 +9,6 @@
         var chart = new CanvasJS.Chart("chartContainer", {
             exportEnabled: true,
             animationEnabled: true,
-            title: {
-                text: "Tỉ lệ nam/nữ của giáo viên",
-                fontFamily: "Segoe UI",
-            },
             legend: {
                 cursor: "pointer",
                 itemclick: explodePie

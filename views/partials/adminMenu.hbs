@@ -3,34 +3,36 @@
     <li><a href="/admin/coursesManage"><i class="fas fa-book" style="margin-right: 8px;"></i>Quản lý học phần</a></li>
     <li><a href="/admin/teachersManage"><i class="fas fa-user" style="margin-right: 8px;"></i>Quản lý giáo viên</a></li>
     <li><a href="/admin/studentsManage"><i class="fas fa-user-graduate" style="margin-right: 8px;"></i>Quản lý học sinh</a></li>
+    
     <li>
         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-chart-bar" style="margin-right: 8px;"></i>Thống kê</a>
-        <ul class="collapse list-unstyled" id="pageSubmenu">
+    </li>
+    <ul class="collapse list-unstyled submenu" id="pageSubmenu">
             <li>
                 <a href="/admin/statistic/teacher"><i class="fas fa-user" style="margin-right: 8px;"></i>Thống kê giáo viên</a>
             </li>
             <li>
                 <a href="#studentSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-user-graduate" style="margin-right: 8px;"></i>Thống kê học sinh</a>
-                <ul class="collapse list-unstyled" id="studentSubmenu">
-                    <li>
-                        <a href="/admin/statistic/student">Tỉ lệ học sinh đậu, rớt</a>
-                    </li>
-                    <li>
-                        <a href="/admin/statistic/student/gender">Tỉ lệ học sinh nam, nữ</a>
-                    </li>
-                </ul>
             </li>
+            <ul class="collapse list-unstyled submenu" id="studentSubmenu">
+                <li>
+                    <a href="/admin/statistic/student">Tỉ lệ học sinh đậu, rớt</a>
+                </li>
+                <li>
+                    <a href="/admin/statistic/student/gender">Tỉ lệ học sinh nam, nữ</a>
+                </li>
+            </ul>
+
             <li>
                 <a href="#classSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-home" style="margin-right: 8px;"></i>Thống kê lớp học</a>
-                <ul class="collapse list-unstyled" id="classSubmenu">
-                    <li>
-                        <a href="/admin/statistic/class/pass">Tỉ lệ qua môn của các lớp</a>
-                    </li>
-                    <li>
-                        <a href="/admin/statistic/class/byDay/2">Các môn học trong ngày</a>
-                    </li>
-                </ul>
             </li>
+            <ul class="collapse list-unstyled submenu" id="classSubmenu">
+                <li>
+                    <a href="/admin/statistic/class/pass">Tỉ lệ qua môn của các lớp</a>
+                </li>
+                <li>
+                    <a href="/admin/statistic/class/byDay/2">Các môn học trong ngày</a>
+                </li>
+            </ul>
         </ul>
-    </li>
 </ul>
