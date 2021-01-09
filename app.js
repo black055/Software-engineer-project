@@ -34,6 +34,7 @@ handlebars.handlebars.registerHelper({
     male: (v1) => v1 == "Nam",
 });
 
+
 // Session 
 app.use(session({
     secret: 'secret',

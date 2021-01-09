@@ -9,6 +9,7 @@ const pool = mysql.createPool({
     database: 'cnpm',
     connectionLimit: 50,
     dateStrings: ['DATE','DATETIME'],
+    charset : 'utf8mb4'
 });
 
 const pool_query = util.promisify(pool.query).bind(pool);
