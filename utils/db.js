@@ -2,10 +2,10 @@ const mysql = require('mysql');
 const util = require('util');
 
 const pool = mysql.createPool({
-    host: 'localhost',
-    port: 3306,
-    user: 'root',
-    password: 'root',
+    host: 'mysql-18180-0.cloudclusters.net',
+    port: 18180,
+    user: 'lethanhviet',
+    password: '22102000',
     database: 'cnpm',
     connectionLimit: 50,
     dateStrings: ['DATE','DATETIME'],
