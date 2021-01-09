@@ -49,15 +49,27 @@ router.get('/enroll', async (req, res) => {
     if (!(await studentExist(req.session.username))) res.redirect('/logout');
     else {
         const data = await studentsModel.getEnrollableSubject(req.session.username);
-        res.render('students/enroll', {
+        const message = req.flash('message');
+        if (typeof message === 'undefined')
+            res.render('students/enroll', {
+                isEnrolling: true,
+                subjectEnroll: data
+            });
+        else res.render('students/enroll', {
             isEnrolling: true,
-            subjectEnroll: data
+            subjectEnroll: data,
+            message: message
         });
     }
 });
 
 router.post('/enroll_classes', async (req, res) => {
     await studentsModel.enrollSubject(req.session.username, req.body.classes);
+    req.flash('message', {
+        icon: 'success',
+        title: 'Đăng ký học phần thành công!',
+        text: 'Đã thêm các học phần vào danh sách học phần của bạn!'
+    });
     res.redirect(`/students/enroll`);
 })
 
@@ -66,15 +78,27 @@ router.get('/unenroll', async (req, res) => {
     if (!(await studentExist(req.session.username))) res.redirect('/logout');
     else {
         const data = await studentsModel.getSubjectEnrolled(req.session.username);
-        res.render('students/unenroll', {
+        const message = req.flash('message');
+        if (typeof message === 'undefined')
+            res.render('students/unenroll', {
+                isDeletingSubject: true,
+                subjects: data
+            });
+        else res.render('students/unenroll', {
             isDeletingSubject: true,
-            subjects: data
+            subjects: data,
+            message: message
         });
     }
 });
 
 router.post('/unenroll_class', async (req, res) => {
     await studentsModel.unenrollSubject(req.session.username, req.body.classEnrolled);
+    req.flash('message', {
+        icon: 'success',
+        title: 'Hủy học phần thành công!',
+        text: 'Đã xóa học phần ra khỏi danh sách học phần của bạn!'
+    });
     res.redirect(`/students/unenroll`);
 })
 

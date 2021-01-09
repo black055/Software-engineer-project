@@ -8,6 +8,7 @@ const session = require('express-session');
 const middlewares = require('./middlewares/login.mdw');
 require('express-async-errors');
 const hbs_sections = require('express-handlebars-sections');
+const flash = require('req-flash');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -45,6 +46,7 @@ app.use(session({
     },
 }));
 
+app.use(flash());
 app.use(function (req, res, next) {
     res.locals.session = req.session;
     next();
